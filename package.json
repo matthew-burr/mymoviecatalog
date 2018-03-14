@@ -1,7 +1,7 @@
 {
-  "name": "My-Movie-Catalog",
+  "name": "my-movie-catalog",
   "version": "1.0.0",
-  "description": "",
+  "description": "A catalog for your personal movie library",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -17,5 +17,8 @@
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "jest": "^22.4.2"
   }
 }
