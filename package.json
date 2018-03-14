@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "engines": {
     "node": "^9.8.0",
@@ -16,9 +16,14 @@
   "license": "UNLICENSED",
   "dependencies": {
     "ejs": "^2.5.7",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "pg": "^7.4.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.1",
+    "babel-preset-env": "^1.6.1",
     "jest": "^22.4.2"
   }
 }
