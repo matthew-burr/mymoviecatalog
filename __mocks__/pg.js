@@ -28,9 +28,9 @@ class Client {
     return new Promise(resolve => {
       if (params) {
         let rows = table.filter(row => row.id == params[0]);
-        resolve(rows);
+        resolve({ rows: rows });
       } else {
-        resolve(table);
+        resolve({ rows: table });
       }
     });
   }
