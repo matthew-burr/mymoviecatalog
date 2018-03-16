@@ -1,4 +1,7 @@
+DROP SCHEMA mmc CASCADE;
+
 CREATE SCHEMA IF NOT EXISTS mmc;
+CREATE TYPE mmc.genre AS ENUM ('action', 'comedy', 'documentary', 'drama', 'romance');
 
 CREATE TABLE IF NOT EXISTS mmc.talent (
   id SERIAL NOT NULL PRIMARY KEY,
@@ -40,3 +43,20 @@ SELECT
  WHERE (m.title LIKE 'The Avengers%')
     OR (m.title = 'Captain America' AND t.last_name = 'Evans')
     OR (m.title = 'Thor' AND t.last_name = 'Hemsworth');
+
+CREATE TABLE mmc.movie_genre (
+  movie_id INT NOT NULL REFERENCES mmc.movie(id),
+  genre mmc.genre NOT NULL,
+  UNIQUE (movie_id, genre)
+);
+
+DELETE FROM mmc.movie_genre;
+INSERT INTO mmc.movie_genre
+SELECT
+    m.id AS movie_id
+  , g.genre AS genre
+  FROM mmc.movie AS m
+ CROSS JOIN (SELECT unnest(enum_range(NULL::mmc.genre)) AS genre) AS g
+ WHERE (m.title LIKE 'The Avengers%' AND g.genre IN ('comedy'::mmc.genre, 'action'::mmc.genre))
+    OR (m.title = 'Captain America' AND g.genre IN ('action'::mmc.genre, 'drama'::mmc.genre))
+    OR (m.title = 'Thor' AND g.genre = 'action'::mmc.genre);

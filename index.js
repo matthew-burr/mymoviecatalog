@@ -1,5 +1,6 @@
 const express = require('express');
 const talent = require('./build/server/model/talent.js');
+const genres = require('./build/server/model/genre.js');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -22,6 +23,20 @@ app.get('/talent/:id', (req, res) => {
 app.get('/talent/:id/movies', (req, res) => {
   talent
     .getTalentMovies(req.params.id)
+    .then(data => res.json(data))
+    .catch(error => sendError(error));
+});
+
+// Genre endpoints
+app.get('/genres', (req, res) => {
+  genres
+    .getGenres()
+    .then(data => res.json(data))
+    .catch(error => sendError(error));
+});
+app.get('/genres/:name/movies', (req, res) => {
+  genres
+    .getGenreMovies(req.params.name)
     .then(data => res.json(data))
     .catch(error => sendError(error));
 });

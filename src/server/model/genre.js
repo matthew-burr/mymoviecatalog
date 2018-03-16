@@ -1,7 +1,11 @@
+// genre.js
+// Model for the Genre endpoint
 import * as db from './db';
 
 export async function getGenres() {
-  return await db.execQuery('SELECT unnest(enum_range(NULL::mmc.genre))');
+  return await db.execQuery(
+    'SELECT unnest(enum_range(NULL::mmc.genre)) AS genre'
+  );
 }
 
 export async function getGenreMovies(genre) {
