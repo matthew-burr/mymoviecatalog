@@ -1,6 +1,6 @@
 const express = require('express');
-const talent = require('build/server/model/talent.js');
-const genres = require('build/server/model/genre.js');
+const talent = require('./build/server/model/talent.js');
+const genres = require('./build/server/model/genre.js');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
