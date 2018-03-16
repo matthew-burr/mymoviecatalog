@@ -47,7 +47,7 @@ SELECT
 CREATE TABLE mmc.movie_genre (
   movie_id INT NOT NULL REFERENCES mmc.movie(id),
   genre mmc.genre NOT NULL,
-  UNIQUE (movie_id, genre)
+  PRIMARY KEY (movie_id, genre)
 );
 
 DELETE FROM mmc.movie_genre;
@@ -60,3 +60,33 @@ SELECT
  WHERE (m.title LIKE 'The Avengers%' AND g.genre IN ('comedy'::mmc.genre, 'action'::mmc.genre))
     OR (m.title = 'Captain America' AND g.genre IN ('action'::mmc.genre, 'drama'::mmc.genre))
     OR (m.title = 'Thor' AND g.genre = 'action'::mmc.genre);
+
+CREATE TABLE IF NOT EXISTS mmc.user (
+  id SERIAL NOT NULL PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  first_name TEXT NULL,
+  last_name TEXT NULL,
+  password TEXT NULL
+);
+
+DELETE FROM mmc.user;
+INSERT INTO mmc.user (email) VALUES
+('matt.d.burr@gmail.com'),
+('mdburr@outlook.com');
+
+CREATE TABLE IF NOT EXISTS mmc.user_movie (
+  movie_id INT NOT NULL REFERENCES mmc.movie (id),
+  user_id INT NOT NULL REFERENCES mmc.user (id),
+  PRIMARY KEY (movie_id, user_id)
+);
+
+DELETE FROM mmc.user_movie;
+INSERT INTO mmc.user_movie
+SELECT 
+    m.id AS movie_id
+  , u.id AS user_id
+  FROM mmc.movie AS m
+ CROSS JOIN mmc.user AS u
+ WHERE (u.email = 'matt.d.burr@gmail.com' AND m.title IN ('Captain America', 'The Avengers'))
+    OR (u.email = 'mdburr@outlook.com' AND m.title IN ('The Avengers', 'Thor'));
+ 
