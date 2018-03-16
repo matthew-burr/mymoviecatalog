@@ -13,28 +13,19 @@ var db = _interopRequireWildcard(_db);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-async function getMovies(userID) {
-  return await db.execQuery(`SELECT m.* 
-       FROM mmc.movie AS m 
-       JOIN mmc.user_movie AS u
-         ON m.id = u.movie_id
-      WHERE u.user_id = $1`, [userID]);
+async function getMovies() {
+  return await db.execQuery(`SELECT *
+       FROM mmc.movie AS m`);
 } // movie.js
 // Model for the Movies endpoint
-async function getMovieById(userID, movieID) {
+async function getMovieById(movieID) {
   return await db.execQuery(`SELECT m.*
        FROM mmc.movie AS m
-       JOIN mmc.user_movie AS u
-         ON m.id = u.movie_id
-      WHERE u.user_id = $1
-        AND m.id = $2`, [userID, movieID]);
+      WHERE m.id = $1`, [movieID]);
 }
 
-async function getMovieGenres(userID, movieID) {
+async function getMovieGenres(movieID) {
   return await db.execQuery(`SELECT g.genre
        FROM mmc.movie_genre AS g
-       JOIN mmc.user_movie AS u
-         ON g.movie_id = u.movie_id
-      WHERE u.user_id = $1
-        AND g.movie_id = $2`, [userID, movieID]);
+      WHERE g.movie_id = $1`, [movieID]);
 }

@@ -46,36 +46,25 @@ app.get('/genres/:name/movies', (req, res) => {
 // TODO: user ID functionality needs to be implemented
 app.get('/movies', (req, res) => {
   movies
-    .getMovies(getUser('mdburr@outlook.com'))
+    .getMovies()
     .then(data => res.json(data))
     .catch(error => sendError(error));
 });
 app.get('/movies/:id', (req, res) => {
   movies
-    .getMovieById(getUser('mdburr@outlook.com'), req.params.id)
+    .getMovieById(req.params.id)
     .then(data => res.json(data))
     .catch(error => sendError(error));
 });
 app.get('/movies/:id/genres', (req, res) => {
   movies
-    .getMovieGenres(getUser('mdburr@outlook.com'), req.params.id)
+    .getMovieGenres(req.params.id)
     .then(data => res.json(data))
     .catch(error => sendError(error));
 });
 
 function sendError(res, error) {
   console.log('Error:' + error);
-}
-
-function getUser(userName) {
-  switch (userName) {
-    case 'matt.d.burr@gmail.com':
-      return 1;
-    case 'mdburr@outlook.com':
-      return 2;
-    default:
-      return 0;
-  }
 }
 
 app.all('*', (req, res) =>
