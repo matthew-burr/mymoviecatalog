@@ -1,33 +1,25 @@
 // Talent.js
 // Defines the Talent class/endpoint
-import { Pool } from 'pg';
+import * as db from './db';
 
-const CONN_STR = process.env.DATABASE_URL || 'postgres://@localhost/cs313';
-const POOL = new Pool({ connectionString: CONN_STR });
+async function execQuery(query, params) {
+  return await execQuery(query, params);
+}
 
 // Returns all talent
 export async function getTalent() {
-  let client = await POOL.connect();
-  let data = await client.query('SELECT * FROM mmc.talent;');
-  client.release();
-  return data.rows;
+  return await db.execQuery('SELECT * FROM mmc.talent');
 }
 
 // Returns a single talent by matching their id
 export async function getTalentById(id) {
-  let client = await POOL.connect();
-  let data = await client.query('SELECT * FROM mmc.talent WHERE id = $1', [id]);
-  client.release();
-  return data.rows;
+  return await db.execQuery('SELECT * FROM mmc.talent WHERE id = $1', [id]);
 }
 
 // Returns all of the movies associated with a talent
 export async function getTalentMovies(id) {
-  let client = await POOL.connect();
-  let data = await client.query(
+  return await db.execQuery(
     'SELECT * FROM mmc.movie_talent WHERE talent_id = $1',
     [id]
   );
-  client.release();
-  return data.rows;
 }
