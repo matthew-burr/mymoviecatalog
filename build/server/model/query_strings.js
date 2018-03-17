@@ -60,5 +60,6 @@ const QUERY_STRINGS = exports.QUERY_STRINGS = {
   ADD_GENRE_TO_MOVIE: `
     INSERT INTO mmc.movie_genre (movie_id, genre)
     VALUES ($1, $2)
-    RETURNING *`
+    RETURNING *`,
+  DELETE_GENRE_FROM_MOVIE: 'DELETE FROM mmc.movie_genre WHERE movie_id = $1 AND genre = $2'
 };

@@ -77,6 +77,14 @@ app.delete('/movies/:id/talent/:talent_id', (req, res) => {
 app.post('/movies/:id/genres/:genre', (req, res) => {
   respondWith(res, movies.addGenreToMovie, req.params.id, req.params.genre);
 });
+app.delete('/movies/:id/genres/:genre', (req, res) => {
+  respondWith(
+    res,
+    movies.deleteGenreFromMovie,
+    req.params.id,
+    req.params.genre
+  );
+});
 
 function respondWith(res, func, ...params) {
   func(...params)

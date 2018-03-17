@@ -194,4 +194,23 @@ describe('the core Movie functionality', () => {
     expect(data).toHaveLength(1);
     expect(data).toEqual([{ movie_id: 1, genre: 'comedy' }]);
   });
+
+  it('should delete the talent from the movie', async () => {
+    pg.__setExpectedQuery(QUERY_STRINGS.DELETE_GENRE_FROM_MOVIE);
+    let test_data = [
+      { movie_id: 1, genre: 'comedy' },
+      { movie_id: 1, genre: 'action' },
+    ];
+    pg.__setQueryHandler((stmt, params) => {
+      let i = test_data.findIndex(
+        row => row.movie_id == params[0] && row.genre == params[1]
+      );
+      test_data.splice(i, 1);
+      return [];
+    });
+    let data = await movie.deleteGenreFromMovie(1, 'action');
+    expect(pg.wasExpectedQuery()).toBeTruthy();
+    expect(test_data).toHaveLength(1);
+    expect(test_data).not.toContainEqual({ movie_id: 1, genre: 'action' });
+  });
 });

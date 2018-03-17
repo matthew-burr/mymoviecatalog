@@ -8,7 +8,22 @@ $(document).ready(() => {
   $('#addTalent_button').click(handleAddTalent);
   $('#deleteTalent_button').click(handleDeleteTalentButton);
   $('#addGenre_button').click(handleAddGenreButton);
+  $('#deleteGenre_button').click(handleDeleteGenreButton);
 });
+
+function handleDeleteGenreButton(event) {
+  let movie_id = $('#movie_id').val();
+  let genre = $('#genre_select').val();
+  fetch(`/movies/${movie_id}/genres/${genre}`, {
+    method: 'DELETE',
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  })
+    .then(res => res.json())
+    .catch(err => writeResponse(err))
+    .then(data => writeResponse(JSON.stringify(data)));
+}
 
 function handleAddGenreButton(event) {
   let movie_id = $('#movie_id').val();

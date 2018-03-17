@@ -51,3 +51,10 @@ export async function deleteTalentFromMovie(movieID, talentID) {
 export async function addGenreToMovie(movieID, genre) {
   return await db.execQuery(QUERY_STRINGS.ADD_GENRE_TO_MOVIE, [movieID, genre]);
 }
+
+export async function deleteGenreFromMovie(movieID, genre) {
+  return await db.execQuery(QUERY_STRINGS.DELETE_GENRE_FROM_MOVIE, [
+    movieID,
+    genre,
+  ]);
+}
