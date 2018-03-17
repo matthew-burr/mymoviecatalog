@@ -1,6 +1,7 @@
 // Test the Movie functionality
 jest.mock('pg');
 import * as movie from '../movie.js';
+import { QUERY_STRINGS } from '../query_strings';
 import pg from 'pg';
 
 describe('the core Movie functionality', () => {
@@ -43,11 +44,14 @@ describe('the core Movie functionality', () => {
   beforeAll(() => {
     pg.__setRows(MOCK_DATA);
   });
+
   it('should get all movies when you call getMovies', async () => {
     pg.__setQueryHandler((stmt, params) => {
       return { rows: MOCK_DATA.movies };
     });
+    pg.__setExpectedQuery(QUERY_STRINGS.SELECT_ALL_MOVIES);
     const data = await movie.getMovies();
+    expect(pg.wasExpectedQuery()).toBeTruthy();
     expect(data).toHaveLength(3);
     expect(data).toEqual(MOCK_DATA.movies);
   });
@@ -58,7 +62,9 @@ describe('the core Movie functionality', () => {
         rows: MOCK_DATA.movies.filter(row => row.id == params[0]),
       };
     });
+    pg.__setExpectedQuery(QUERY_STRINGS.SELECT_ONE_MOVIE);
     let data = await movie.getMovieById(1);
+    expect(pg.wasExpectedQuery()).toBeTruthy();
     expect(data).toHaveLength(1);
     expect(data).toEqual([{ id: 1, title: 'Captain America' }]);
 
@@ -74,7 +80,9 @@ describe('the core Movie functionality', () => {
           .genres,
       };
     });
+    pg.__setExpectedQuery(QUERY_STRINGS.SELECT_MOVIE_GENRE);
     let data = await movie.getMovieGenres(1 /* movie id */);
+    expect(pg.wasExpectedQuery()).toBeTruthy();
     expect(data).toHaveLength(2);
     expect(data).toEqual([{ genre: 'Action' }, { genre: 'Drama' }]);
 
@@ -90,7 +98,9 @@ describe('the core Movie functionality', () => {
           .talent,
       };
     });
+    pg.__setExpectedQuery(QUERY_STRINGS.SELECT_MOVIE_TALENT);
     let data = await movie.getMovieTalent(1);
+    expect(pg.wasExpectedQuery()).toBeTruthy();
     expect(data).toHaveLength(1);
     expect(data).toEqual([{ id: 1, name: 'Chris Evans' }]);
 
@@ -108,7 +118,9 @@ describe('the core Movie functionality', () => {
         rows: [{ id: 10, title: params[0] }],
       };
     });
+    pg.__setExpectedQuery(QUERY_STRINGS.INSERT_MOVIE);
     let data = await movie.postMovie({ title: 'The Last of the Mohicans' });
+    expect(pg.wasExpectedQuery()).toBeTruthy();
     expect(data).toHaveLength(1);
     expect(data).toEqual([{ id: 10, title: 'The Last of the Mohicans' }]);
   });

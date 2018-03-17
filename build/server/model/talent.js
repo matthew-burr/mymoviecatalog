@@ -12,17 +12,21 @@ var _db = require('./db');
 
 var db = _interopRequireWildcard(_db);
 
+var _query_strings = require('./query_strings');
+
+var QUERY_STRINGS = _interopRequireWildcard(_query_strings);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+// Talent.js
+// Defines the Talent class/endpoint
 async function execQuery(query, params) {
   return await execQuery(query, params);
 }
 
 // Returns all talent
-// Talent.js
-// Defines the Talent class/endpoint
 async function getTalent() {
-  return await db.execQuery('SELECT * FROM mmc.talent');
+  return await db.execQuery(QUERY_STRINGS.SELECT_ALL_TALENT);
 }
 
 // Returns a single talent by matching their id
