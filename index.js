@@ -10,39 +10,39 @@ app.use(express.static('build/public'));
 // Talent endpoints
 // TODO: Look into nesting endpoints
 app.get('/talent', (req, res) => {
-  execGenericQuery(res, talent.getTalent);
+  respondWith(res, talent.getTalent);
 });
 app.get('/talent/:id', (req, res) => {
-  execGenericQuery(res, talent.getTalentById, req.params.id);
+  respondWith(res, talent.getTalentById, req.params.id);
 });
 app.get('/talent/:id/movies', (req, res) => {
-  execGenericQuery(res, talent.getTalentMovies, req.params.id);
+  respondWith(res, talent.getTalentMovies, req.params.id);
 });
 
 // Genre endpoints
 app.get('/genres', (req, res) => {
-  execGenericQuery(res, genres.getGenres);
+  respondWith(res, genres.getGenres);
 });
 app.get('/genres/:name/movies', (req, res) => {
-  execGenericQuery(res, genres.getGenreMovies, req.params.name);
+  respondWith(res, genres.getGenreMovies, req.params.name);
 });
 
 // Movie endpoints
 // TODO: user ID functionality needs to be implemented
 app.get('/movies', (req, res) => {
-  execGenericQuery(res, movies.getMovies);
+  respondWith(res, movies.getMovies);
 });
 app.get('/movies/:id', (req, res) => {
-  execGenericQuery(res, movies.getMovieById, req.params.id);
+  respondWith(res, movies.getMovieById, req.params.id);
 });
 app.get('/movies/:id/genres', (req, res) => {
-  execGenericQuery(res, movies.getMovieGenres, req.params.id);
+  respondWith(res, movies.getMovieGenres, req.params.id);
 });
 app.get('/movies/:id/talent', (req, res) => {
-  execGenericQuery(res, movies.getMovieTalent, req.params.id);
+  respondWith(res, movies.getMovieTalent, req.params.id);
 });
 
-function execGenericQuery(res, func, ...params) {
+function respondWith(res, func, ...params) {
   func(...params)
     .then(data => res.json(data))
     .catch(error => sendError(error));
