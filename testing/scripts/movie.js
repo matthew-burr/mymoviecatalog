@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  addOptionsToGenreSelect();
   $('#movie_id').change(handleIDChange);
   $('#talent_id').change(handleTalentIDChange);
   $('#insert_button').click(handleInsert);
@@ -6,7 +7,28 @@ $(document).ready(() => {
   $('#delete_button').click(handleDelete);
   $('#addTalent_button').click(handleAddTalent);
   $('#deleteTalent_button').click(handleDeleteTalentButton);
+  $('#addGenre_button').click(handleAddGenreButton);
 });
+
+function handleAddGenreButton(event) {
+  let movie_id = $('#movie_id').val();
+  let genre = $('#genre_select').val();
+  fetch(`/movies/${movie_id}/genres/${genre}`, {
+    method: 'POST',
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  })
+    .then(res => {
+      return res.json();
+    })
+    .catch(err => {
+      writeResponse(err);
+    })
+    .then(data => {
+      writeResponse(JSON.stringify(data));
+    });
+}
 
 function handleDeleteTalentButton(event) {
   let movie_id = $('#movie_id').val();
@@ -150,6 +172,26 @@ function handleIDChange(event) {
     });
 }
 
+function addOptionsToGenreSelect() {
+  fetch('/genres', {
+    method: 'GET',
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  })
+    .then(res => {
+      return res.json();
+    })
+    .catch(err => {
+      writeResponse(err);
+    })
+    .then(data => {
+      let options = data
+        .map(genre => `<option value="${genre.genre}">${genre.genre}</option>`)
+        .join('');
+      $('#genre_select').html(options);
+    });
+}
 function writeResponse(text) {
   $('#response').text(text);
 }

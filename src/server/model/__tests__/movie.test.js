@@ -183,4 +183,15 @@ describe('the core Movie functionality', () => {
     expect(test_data).toHaveLength(1);
     expect(test_data).not.toContainEqual({ movie_id: 1, talent_id: 2 });
   });
+
+  it('should add the talent to the movie', async () => {
+    pg.__setExpectedQuery(QUERY_STRINGS.ADD_GENRE_TO_MOVIE);
+    pg.__setQueryHandler((stmt, params) => {
+      return { rows: [{ movie_id: params[0], genre: params[1] }] };
+    });
+    let data = await movie.addGenreToMovie(1, 'comedy');
+    expect(pg.wasExpectedQuery()).toBeTruthy();
+    expect(data).toHaveLength(1);
+    expect(data).toEqual([{ movie_id: 1, genre: 'comedy' }]);
+  });
 });

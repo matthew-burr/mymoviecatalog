@@ -12,6 +12,7 @@ exports.putMovie = putMovie;
 exports.deleteMovie = deleteMovie;
 exports.addTalentToMovie = addTalentToMovie;
 exports.deleteTalentFromMovie = deleteTalentFromMovie;
+exports.addGenreToMovie = addGenreToMovie;
 
 var _db = require('./db');
 
@@ -57,4 +58,8 @@ async function addTalentToMovie(movieID, talentID) {
 
 async function deleteTalentFromMovie(movieID, talentID) {
   return await db.execQuery(_query_strings.QUERY_STRINGS.DELETE_TALENT_FROM_MOVIE, [movieID, talentID]);
+}
+
+async function addGenreToMovie(movieID, genre) {
+  return await db.execQuery(_query_strings.QUERY_STRINGS.ADD_GENRE_TO_MOVIE, [movieID, genre]);
 }

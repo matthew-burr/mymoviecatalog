@@ -74,6 +74,9 @@ app.delete('/movies/:id/talent/:talent_id', (req, res) => {
     req.params.talent_id
   );
 });
+app.post('/movies/:id/genres/:genre', (req, res) => {
+  respondWith(res, movies.addGenreToMovie, req.params.id, req.params.genre);
+});
 
 function respondWith(res, func, ...params) {
   func(...params)

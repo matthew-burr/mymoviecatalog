@@ -52,4 +52,8 @@ export const QUERY_STRINGS = {
     DELETE FROM mmc.movie_talent
      WHERE movie_id = $1
        AND talent_id = $2`,
+  ADD_GENRE_TO_MOVIE: `
+    INSERT INTO mmc.movie_genre (movie_id, genre)
+    VALUES ($1, $2)
+    RETURNING *`,
 };
