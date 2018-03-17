@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const talent = require('./build/server/model/talent.js');
 const genres = require('./build/server/model/genre.js');
 const movies = require('./build/server/model/movie');
@@ -6,6 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.static('build/public'));
+app.use(bodyParser.json());
+app.use('/testing', express.static('testing'));
 
 // Talent endpoints
 // TODO: Look into nesting endpoints
@@ -17,6 +20,10 @@ app.get('/talent/:id', (req, res) => {
 });
 app.get('/talent/:id/movies', (req, res) => {
   respondWith(res, talent.getTalentMovies, req.params.id);
+});
+app.post('/talent', (req, res) => {
+  let data = req.body;
+  respondWith(res, talent.postTalent, data);
 });
 
 // Genre endpoints
@@ -45,11 +52,12 @@ app.get('/movies/:id/talent', (req, res) => {
 function respondWith(res, func, ...params) {
   func(...params)
     .then(data => res.json(data))
-    .catch(error => sendError(error));
+    .catch(error => sendError(res, error));
 }
 
 function sendError(res, error) {
-  console.log('Error:' + error);
+  console.log('Error: ' + error);
+  res.status(400).json({ error: error });
 }
 
 app.all('*', (req, res) =>

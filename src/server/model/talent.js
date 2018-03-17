@@ -27,3 +27,13 @@ export async function getTalentMovies(id) {
     [id]
   );
 }
+
+// Adds a new Talent
+export async function postTalent(talent) {
+  return await db.execQuery(
+    `INSERT INTO mmc.talent (first_name, last_name)
+     VALUES($1, $2)
+     RETURNING *`,
+    [talent.first_name, talent.last_name]
+  );
+}

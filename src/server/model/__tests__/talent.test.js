@@ -4,7 +4,7 @@ import * as talent from '../talent.js';
 import pg from 'pg';
 
 describe('test the Talent endpoint', () => {
-  const MOCK_DATA = {
+  let MOCK_DATA = {
     talent: [
       { id: 1, first_name: 'Matthew', last_name: 'Burr' },
       { id: 2, first_name: 'Amy', last_name: 'Burr' },
@@ -47,5 +47,23 @@ describe('test the Talent endpoint', () => {
     const data = await talent.getTalentMovies(1);
     expect(data).toHaveLength(2);
     expect(data).toEqual(MOCK_DATA.movie_talent.filter(row => row.id == 1));
+  });
+
+  it('should add a new talent and return its id', async () => {
+    pg.__setQueryHandler((stmt, params) => {
+      return { rows: [{ id: 3, first_name: params[0], last_name: params[1] }] };
+    });
+    const data = await talent.postTalent({
+      first_name: 'Chris',
+      last_name: 'Evans',
+    });
+    expect(data).toHaveLength(1);
+    expect(data).toEqual([
+      {
+        id: 3,
+        first_name: 'Chris',
+        last_name: 'Evans',
+      },
+    ]);
   });
 });

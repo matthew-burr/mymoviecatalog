@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getTalent = getTalent;
 exports.getTalentById = getTalentById;
 exports.getTalentMovies = getTalentMovies;
+exports.postTalent = postTalent;
 
 var _db = require('./db');
 
@@ -36,4 +37,11 @@ async function getTalentMovies(id) {
        JOIN mmc.movie AS m
          ON t.movie_id = m.id
       WHERE t.talent_id = $1`, [id]);
+}
+
+// Adds a new Talent
+async function postTalent(talent) {
+  return await db.execQuery(`INSERT INTO mmc.talent (first_name, last_name)
+     VALUES($1, $2)
+     RETURNING *`, [talent.first_name, talent.last_name]);
 }
