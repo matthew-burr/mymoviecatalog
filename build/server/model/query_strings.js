@@ -41,5 +41,11 @@ const QUERY_STRINGS = exports.QUERY_STRINGS = {
   INSERT_MOVIE: `
     INSERT INTO mmc.movie (title)
     VALUES ($1)
-    RETURNING *`
+    RETURNING *`,
+  UPDATE_MOVIE: `
+    UPDATE mmc.movie
+       SET title = $2
+     WHERE id = $1
+    RETURNING *
+  `
 };

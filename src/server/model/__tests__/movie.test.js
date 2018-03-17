@@ -124,4 +124,16 @@ describe('the core Movie functionality', () => {
     expect(data).toHaveLength(1);
     expect(data).toEqual([{ id: 10, title: 'The Last of the Mohicans' }]);
   });
+
+  it('should update the movie when you call putMovie', async () => {
+    pg.__setExpectedQuery(QUERY_STRINGS.UPDATE_MOVIE);
+    pg.__setQueryHandler((stmt, params) => {
+      return {
+        rows: [{ id: params[0], title: params[1] }],
+      };
+    });
+    let data = await movie.putMovie({ id: 10, title: 'The Last Starfighter' });
+    expect(pg.wasExpectedQuery()).toBeTruthy();
+    expect(data).toEqual([{ id: 10, title: 'The Last Starfighter' }]);
+  });
 });

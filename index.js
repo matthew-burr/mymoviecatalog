@@ -50,6 +50,11 @@ app.get('/movies/:id/talent', (req, res) => {
 app.post('/movies', (req, res) => {
   respondWith(res, movies.postMovie, req.body);
 });
+app.put('/movies/:id', (req, res) => {
+  let data = req.body;
+  data.id = req.params.id;
+  respondWith(res, movies.putMovie, data);
+});
 
 function respondWith(res, func, ...params) {
   func(...params)

@@ -22,3 +22,10 @@ export async function getMovieTalent(movieID) {
 export async function postMovie(movie) {
   return await db.execQuery(QUERY_STRINGS.INSERT_MOVIE, [movie.title]);
 }
+
+export async function putMovie(movie) {
+  return await db.execQuery(QUERY_STRINGS.UPDATE_MOVIE, [
+    movie.id,
+    movie.title,
+  ]);
+}
