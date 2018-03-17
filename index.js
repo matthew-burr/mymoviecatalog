@@ -62,6 +62,12 @@ app.get('/movies/:id/genres', (req, res) => {
     .then(data => res.json(data))
     .catch(error => sendError(error));
 });
+app.get('/movies/:id/talent', (req, res) => {
+  movies
+    .getMovieTalent(req.params.id)
+    .then(data => res.json(data))
+    .catch(error => sendError(error));
+});
 
 function sendError(res, error) {
   console.log('Error:' + error);

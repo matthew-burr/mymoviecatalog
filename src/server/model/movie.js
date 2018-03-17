@@ -26,3 +26,14 @@ export async function getMovieGenres(movieID) {
     [movieID]
   );
 }
+
+export async function getMovieTalent(movieID) {
+  return await db.execQuery(
+    `SELECT t.*
+       FROM mmc.movie_talent AS m
+       JOIN mmc.talent AS t
+         ON m.talent_id = t.id
+      WHERE m.movie_id = $1`,
+    [movieID]
+  );
+}

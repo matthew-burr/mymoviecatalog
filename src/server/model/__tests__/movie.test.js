@@ -21,6 +21,23 @@ describe('the core Movie functionality', () => {
         genres: [{ genre: 'Action' }, { genre: 'Comedy' }],
       },
     ],
+    movie_talent: [
+      {
+        movie_id: 1,
+        talent: [{ id: 1, name: 'Chris Evans' }],
+      },
+      {
+        movie_id: 2,
+        talent: [{ id: 2, name: 'Chris Hemsworth' }],
+      },
+      {
+        movie_id: 3,
+        talent: [
+          { id: 1, name: 'Chris Evans' },
+          { id: 2, name: 'Chris Hemsworth' },
+        ],
+      },
+    ],
   };
 
   beforeAll(() => {
@@ -64,5 +81,24 @@ describe('the core Movie functionality', () => {
     data = await movie.getMovieGenres(3);
     expect(data).toHaveLength(2);
     expect(data).toEqual([{ genre: 'Action' }, { genre: 'Comedy' }]);
+  });
+
+  it('should get the list of talent associated with the movie when you call getMovieTalent', async () => {
+    pg.__setQueryHandler((stmt, params) => {
+      return {
+        rows: MOCK_DATA.movie_talent.filter(row => row.movie_id == params[0])[0]
+          .talent,
+      };
+    });
+    let data = await movie.getMovieTalent(1);
+    expect(data).toHaveLength(1);
+    expect(data).toEqual([{ id: 1, name: 'Chris Evans' }]);
+
+    data = await movie.getMovieTalent(3);
+    expect(data).toHaveLength(2);
+    expect(data).toEqual([
+      { id: 1, name: 'Chris Evans' },
+      { id: 2, name: 'Chris Hemsworth' },
+    ]);
   });
 });

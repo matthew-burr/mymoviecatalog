@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getMovies = getMovies;
 exports.getMovieById = getMovieById;
 exports.getMovieGenres = getMovieGenres;
+exports.getMovieTalent = getMovieTalent;
 
 var _db = require('./db');
 
@@ -28,4 +29,12 @@ async function getMovieGenres(movieID) {
   return await db.execQuery(`SELECT g.genre
        FROM mmc.movie_genre AS g
       WHERE g.movie_id = $1`, [movieID]);
+}
+
+async function getMovieTalent(movieID) {
+  return await db.execQuery(`SELECT t.*
+       FROM mmc.movie_talent AS m
+       JOIN mmc.talent AS t
+         ON m.talent_id = t.id
+      WHERE m.movie_id = $1`, [movieID]);
 }
