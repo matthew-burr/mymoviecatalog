@@ -17,7 +17,9 @@ function __setExpectedQuery(query) {
   expectedQuery = query;
 }
 function wasExpectedQuery() {
-  return sentExpectedQuery;
+  let tempSent = sentExpectedQuery;
+  sentExpectedQuery = false;
+  return tempSent;
 }
 
 class Pool {

@@ -58,6 +58,14 @@ app.put('/movies/:id', (req, res) => {
 app.delete('/movies/:id', (req, res) => {
   respondWith(res, movies.deleteMovie, req.params.id);
 });
+app.post('/movies/:id/talent/:talent_id', (req, res) => {
+  respondWith(
+    res,
+    movies.addTalentToMovie,
+    req.params.id,
+    req.params.talent_id
+  );
+});
 
 function respondWith(res, func, ...params) {
   func(...params)

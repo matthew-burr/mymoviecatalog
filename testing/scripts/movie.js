@@ -1,9 +1,31 @@
 $(document).ready(() => {
   $('#movie_id').change(handleIDChange);
+  $('#talent_id').change(handleTalentIDChange);
   $('#insert_button').click(handleInsert);
   $('#update_button').click(handleUpdate);
   $('#delete_button').click(handleDelete);
+  $('#addTalent_button').click(handleAddTalent);
 });
+
+function handleAddTalent(event) {
+  let movie_id = $('#movie_id').val();
+  let talent_id = $('#talent_id').val();
+  fetch(`/movies/${movie_id}/talent/${talent_id}`, {
+    method: 'POST',
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  })
+    .then(res => {
+      return res.json();
+    })
+    .catch(err => {
+      writeResponse(err);
+    })
+    .then(data => {
+      writeResponse(JSON.stringify(data));
+    });
+}
 
 function handleDelete(event) {
   let movie_id = $('#movie_id').val();
@@ -71,6 +93,23 @@ function handleInsert(event) {
     })
     .then(data => {
       $('#response').text(JSON.stringify(data));
+    });
+}
+
+function handleTalentIDChange(event) {
+  let id = $('#talent_id').val();
+  fetch(`/talent/${id}`, {
+    method: 'GET',
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  })
+    .then(res => {
+      return res.json();
+    })
+    .then(obj => {
+      if (obj && obj.length > 0)
+        $('#talent_name').text(`${obj[0].first_name} ${obj[0].last_name}`);
     });
 }
 

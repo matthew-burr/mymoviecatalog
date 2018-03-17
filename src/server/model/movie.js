@@ -33,3 +33,10 @@ export async function putMovie(movie) {
 export async function deleteMovie(movieID) {
   return await db.execQuery(QUERY_STRINGS.DELETE_MOVIE, [movieID]);
 }
+
+export async function addTalentToMovie(movieID, talentID) {
+  return await db.execQuery(QUERY_STRINGS.ADD_TALENT_TO_MOVIE, [
+    movieID,
+    talentID,
+  ]);
+}

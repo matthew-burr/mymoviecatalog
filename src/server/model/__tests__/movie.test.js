@@ -153,4 +153,15 @@ describe('the core Movie functionality', () => {
     expect(test_data).toHaveLength(1);
     expect(test_data).not.toContainEqual({ id: 2, title: 'Captain America' });
   });
+
+  it('should add the talent to the movie', async () => {
+    pg.__setExpectedQuery(QUERY_STRINGS.ADD_TALENT_TO_MOVIE);
+    pg.__setQueryHandler((stmt, params) => {
+      return { rows: [{ movie_id: params[0], talent_id: params[1] }] };
+    });
+    let data = await movie.addTalentToMovie(2, 3);
+    expect(pg.wasExpectedQuery()).toBeTruthy();
+    expect(data).toHaveLength(1);
+    expect(data).toEqual([{ movie_id: 2, talent_id: 3 }]);
+  });
 });
