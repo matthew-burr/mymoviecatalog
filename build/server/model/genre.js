@@ -17,5 +17,9 @@ async function getGenres() {
 } // genre.js
 // Model for the Genre endpoint
 async function getGenreMovies(genre) {
-  return await db.execQuery('SELECT * FROM mmc.movie_genre WHERE genre = $1::mmc.genre', [genre]);
+  return await db.execQuery(`SELECT m.id, m.title 
+       FROM mmc.movie_genre AS g
+       JOIN mmc.movie AS m
+         ON g.movie_id = m.id
+      WHERE g.genre = $1::mmc.genre`, [genre]);
 }

@@ -19,7 +19,11 @@ export async function getTalentById(id) {
 // Returns all of the movies associated with a talent
 export async function getTalentMovies(id) {
   return await db.execQuery(
-    'SELECT * FROM mmc.movie_talent WHERE talent_id = $1',
+    `SELECT m.id, m.title 
+       FROM mmc.movie_talent AS t
+       JOIN mmc.movie AS m
+         ON t.movie_id = m.id
+      WHERE t.talent_id = $1`,
     [id]
   );
 }
