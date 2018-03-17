@@ -5,7 +5,28 @@ $(document).ready(() => {
   $('#update_button').click(handleUpdate);
   $('#delete_button').click(handleDelete);
   $('#addTalent_button').click(handleAddTalent);
+  $('#deleteTalent_button').click(handleDeleteTalentButton);
 });
+
+function handleDeleteTalentButton(event) {
+  let movie_id = $('#movie_id').val();
+  let talent_id = $('#talent_id').val();
+  fetch(`/movies/${movie_id}/talent/${talent_id}`, {
+    method: 'DELETE',
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  })
+    .then(res => {
+      return res.json();
+    })
+    .catch(err => {
+      writeResponse(err);
+    })
+    .then(data => {
+      writeResponse(JSON.stringify(data));
+    });
+}
 
 function handleAddTalent(event) {
   let movie_id = $('#movie_id').val();

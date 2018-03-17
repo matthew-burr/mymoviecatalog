@@ -164,4 +164,23 @@ describe('the core Movie functionality', () => {
     expect(data).toHaveLength(1);
     expect(data).toEqual([{ movie_id: 2, talent_id: 3 }]);
   });
+
+  it('should delete the talent from the movies', async () => {
+    pg.__setExpectedQuery(QUERY_STRINGS.DELETE_TALENT_FROM_MOVIE);
+    let test_data = [
+      { movie_id: 1, talent_id: 1 },
+      { movie_id: 1, talent_id: 2 },
+    ];
+    pg.__setQueryHandler((stmt, params) => {
+      let i = test_data.findIndex(
+        row => row.movie_id == params[0] && row.talent_id == params[1]
+      );
+      test_data.splice(i, 1);
+      return [];
+    });
+    let data = await movie.deleteTalentFromMovie(1, 2);
+    expect(pg.wasExpectedQuery()).toBeTruthy();
+    expect(test_data).toHaveLength(1);
+    expect(test_data).not.toContainEqual({ movie_id: 1, talent_id: 2 });
+  });
 });

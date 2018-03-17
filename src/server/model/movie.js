@@ -40,3 +40,10 @@ export async function addTalentToMovie(movieID, talentID) {
     talentID,
   ]);
 }
+
+export async function deleteTalentFromMovie(movieID, talentID) {
+  return await db.execQuery(QUERY_STRINGS.DELETE_TALENT_FROM_MOVIE, [
+    movieID,
+    talentID,
+  ]);
+}

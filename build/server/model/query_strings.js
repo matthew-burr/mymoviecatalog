@@ -52,5 +52,9 @@ const QUERY_STRINGS = exports.QUERY_STRINGS = {
   ADD_TALENT_TO_MOVIE: `
     INSERT INTO mmc.movie_talent (movie_id, talent_id)
     VALUES ($1, $2)
-    RETURNING *`
+    RETURNING *`,
+  DELETE_TALENT_FROM_MOVIE: `
+    DELETE FROM mmc.movie_talent
+     WHERE movie_id = $1
+       AND talent_id = $2`
 };

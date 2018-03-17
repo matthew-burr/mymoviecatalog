@@ -66,6 +66,14 @@ app.post('/movies/:id/talent/:talent_id', (req, res) => {
     req.params.talent_id
   );
 });
+app.delete('/movies/:id/talent/:talent_id', (req, res) => {
+  respondWith(
+    res,
+    movies.deleteTalentFromMovie,
+    req.params.id,
+    req.params.talent_id
+  );
+});
 
 function respondWith(res, func, ...params) {
   func(...params)
