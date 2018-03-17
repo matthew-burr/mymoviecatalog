@@ -17,7 +17,7 @@ INSERT INTO mmc.talent (first_name, last_name) VALUES
 
 CREATE TABLE IF NOT EXISTS mmc.movie (
   id SERIAL NOT NULL PRIMARY KEY,
-  title TEXT NOT NULL
+  title TEXT NOT NULL UNIQUE
 );
 
 DELETE FROM mmc.movie;

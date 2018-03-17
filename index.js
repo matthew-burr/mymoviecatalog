@@ -22,8 +22,7 @@ app.get('/talent/:id/movies', (req, res) => {
   respondWith(res, talent.getTalentMovies, req.params.id);
 });
 app.post('/talent', (req, res) => {
-  let data = req.body;
-  respondWith(res, talent.postTalent, data);
+  respondWith(res, talent.postTalent, req.body);
 });
 
 // Genre endpoints
@@ -47,6 +46,9 @@ app.get('/movies/:id/genres', (req, res) => {
 });
 app.get('/movies/:id/talent', (req, res) => {
   respondWith(res, movies.getMovieTalent, req.params.id);
+});
+app.post('/movies', (req, res) => {
+  respondWith(res, movies.postMovie, req.body);
 });
 
 function respondWith(res, func, ...params) {

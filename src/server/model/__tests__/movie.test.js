@@ -101,4 +101,15 @@ describe('the core Movie functionality', () => {
       { id: 2, name: 'Chris Hemsworth' },
     ]);
   });
+
+  it('should add a new movie with you call postMovie', async () => {
+    pg.__setQueryHandler((stmt, params) => {
+      return {
+        rows: [{ id: 10, title: params[0] }],
+      };
+    });
+    let data = await movie.postMovie({ title: 'The Last of the Mohicans' });
+    expect(data).toHaveLength(1);
+    expect(data).toEqual([{ id: 10, title: 'The Last of the Mohicans' }]);
+  });
 });

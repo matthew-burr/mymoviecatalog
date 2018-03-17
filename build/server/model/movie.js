@@ -7,6 +7,7 @@ exports.getMovies = getMovies;
 exports.getMovieById = getMovieById;
 exports.getMovieGenres = getMovieGenres;
 exports.getMovieTalent = getMovieTalent;
+exports.postMovie = postMovie;
 
 var _db = require('./db');
 
@@ -37,4 +38,10 @@ async function getMovieTalent(movieID) {
        JOIN mmc.talent AS t
          ON m.talent_id = t.id
       WHERE m.movie_id = $1`, [movieID]);
+}
+
+async function postMovie(movie) {
+  return await db.execQuery(`INSERT INTO mmc.movie (title)
+     VALUES ($1)
+     RETURNING *`, [movie.title]);
 }

@@ -37,3 +37,12 @@ export async function getMovieTalent(movieID) {
     [movieID]
   );
 }
+
+export async function postMovie(movie) {
+  return await db.execQuery(
+    `INSERT INTO mmc.movie (title)
+     VALUES ($1)
+     RETURNING *`,
+    [movie.title]
+  );
+}
