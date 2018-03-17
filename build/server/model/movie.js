@@ -9,6 +9,7 @@ exports.getMovieGenres = getMovieGenres;
 exports.getMovieTalent = getMovieTalent;
 exports.postMovie = postMovie;
 exports.putMovie = putMovie;
+exports.deleteMovie = deleteMovie;
 
 var _db = require('./db');
 
@@ -42,4 +43,8 @@ async function postMovie(movie) {
 
 async function putMovie(movie) {
   return await db.execQuery(_query_strings.QUERY_STRINGS.UPDATE_MOVIE, [movie.id, movie.title]);
+}
+
+async function deleteMovie(movieID) {
+  return await db.execQuery(_query_strings.QUERY_STRINGS.DELETE_MOVIE, [movieID]);
 }

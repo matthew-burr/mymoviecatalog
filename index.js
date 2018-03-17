@@ -55,6 +55,9 @@ app.put('/movies/:id', (req, res) => {
   data.id = req.params.id;
   respondWith(res, movies.putMovie, data);
 });
+app.delete('/movies/:id', (req, res) => {
+  respondWith(res, movies.deleteMovie, req.params.id);
+});
 
 function respondWith(res, func, ...params) {
   func(...params)

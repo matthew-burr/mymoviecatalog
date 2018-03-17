@@ -29,3 +29,7 @@ export async function putMovie(movie) {
     movie.title,
   ]);
 }
+
+export async function deleteMovie(movieID) {
+  return await db.execQuery(QUERY_STRINGS.DELETE_MOVIE, [movieID]);
+}

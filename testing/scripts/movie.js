@@ -2,7 +2,31 @@ $(document).ready(() => {
   $('#movie_id').change(handleIDChange);
   $('#insert_button').click(handleInsert);
   $('#update_button').click(handleUpdate);
+  $('#delete_button').click(handleDelete);
 });
+
+function handleDelete(event) {
+  let movie_id = $('#movie_id').val();
+  fetch(`/movies/${movie_id}`, {
+    method: 'DELETE',
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  })
+    .then(res => {
+      return res.json();
+    })
+    .catch(err => {
+      writeResponse(err);
+    })
+    .then(data => {
+      if (data && data.length == 0) {
+        $('#movie_id').val('');
+        $('#title').val('');
+      }
+      writeResponse(JSON.stringify(data));
+    });
+}
 
 function handleUpdate(event) {
   let movie = {

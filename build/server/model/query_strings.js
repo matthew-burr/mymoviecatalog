@@ -47,5 +47,6 @@ const QUERY_STRINGS = exports.QUERY_STRINGS = {
        SET title = $2
      WHERE id = $1
     RETURNING *
-  `
+  `,
+  DELETE_MOVIE: 'DELETE FROM mmc.movie WHERE id = $1'
 };

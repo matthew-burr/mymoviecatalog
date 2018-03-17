@@ -136,4 +136,21 @@ describe('the core Movie functionality', () => {
     expect(pg.wasExpectedQuery()).toBeTruthy();
     expect(data).toEqual([{ id: 10, title: 'The Last Starfighter' }]);
   });
+
+  it('should delete the movie when you call deleteMovie', async () => {
+    pg.__setExpectedQuery(QUERY_STRINGS.DELETE_MOVIE);
+    let test_data = [
+      { id: 1, title: 'Captain America' },
+      { id: 2, title: 'Winter Soldier' },
+    ];
+    pg.__setQueryHandler((stmt, params) => {
+      let i = test_data.findIndex(row => row.id == params[0]);
+      test_data.splice(i, 1);
+      return [];
+    });
+    let data = await movie.deleteMovie(2);
+    expect(pg.wasExpectedQuery()).toBeTruthy();
+    expect(test_data).toHaveLength(1);
+    expect(test_data).not.toContainEqual({ id: 2, title: 'Captain America' });
+  });
 });

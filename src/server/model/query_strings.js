@@ -43,4 +43,5 @@ export const QUERY_STRINGS = {
      WHERE id = $1
     RETURNING *
   `,
+  DELETE_MOVIE: 'DELETE FROM mmc.movie WHERE id = $1',
 };

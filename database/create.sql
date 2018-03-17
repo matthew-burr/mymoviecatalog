@@ -28,7 +28,7 @@ INSERT INTO mmc.movie (title) VALUES
 ('Thor');
 
 CREATE TABLE IF NOT EXISTS mmc.movie_talent (
-  movie_id INT NOT NULL REFERENCES mmc.movie (id),
+  movie_id INT NOT NULL REFERENCES mmc.movie (id) ON DELETE CASCADE,
   talent_id INT NOT NULL REFERENCES mmc.talent (id),
   UNIQUE (movie_id, talent_id) 
 );
@@ -45,7 +45,7 @@ SELECT
     OR (m.title = 'Thor' AND t.last_name = 'Hemsworth');
 
 CREATE TABLE mmc.movie_genre (
-  movie_id INT NOT NULL REFERENCES mmc.movie(id),
+  movie_id INT NOT NULL REFERENCES mmc.movie(id) ON DELETE CASCADE,
   genre mmc.genre NOT NULL,
   PRIMARY KEY (movie_id, genre)
 );
@@ -75,7 +75,7 @@ INSERT INTO mmc.user (email) VALUES
 ('mdburr@outlook.com');
 
 CREATE TABLE IF NOT EXISTS mmc.user_movie (
-  movie_id INT NOT NULL REFERENCES mmc.movie (id),
+  movie_id INT NOT NULL REFERENCES mmc.movie (id) ON DELETE CASCADE,
   user_id INT NOT NULL REFERENCES mmc.user (id),
   PRIMARY KEY (movie_id, user_id)
 );
