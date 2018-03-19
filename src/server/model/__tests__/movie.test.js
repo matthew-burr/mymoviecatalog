@@ -132,7 +132,9 @@ describe('the core Movie functionality', () => {
         rows: [{ id: params[0], title: params[1] }],
       };
     });
-    let data = await movie.putMovie({ id: 10, title: 'The Last Starfighter' });
+    let data = await movie.putMovie(10, {
+      title: 'The Last Starfighter',
+    });
     expect(pg.wasExpectedQuery()).toBeTruthy();
     expect(data).toEqual([{ id: 10, title: 'The Last Starfighter' }]);
   });

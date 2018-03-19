@@ -51,9 +51,7 @@ app.post('/movies', (req, res) => {
   respondWith(res, movies.postMovie, req.body);
 });
 app.put('/movies/:id', (req, res) => {
-  let data = req.body;
-  data.id = req.params.id;
-  respondWith(res, movies.putMovie, data);
+  respondWith(res, movies.putMovie, req.params.id, req.body);
 });
 app.delete('/movies/:id', (req, res) => {
   respondWith(res, movies.deleteMovie, req.params.id);

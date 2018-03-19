@@ -45,8 +45,8 @@ async function postMovie(movie) {
   return await db.execQuery(_query_strings.QUERY_STRINGS.INSERT_MOVIE, [movie.title]);
 }
 
-async function putMovie(movie) {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.UPDATE_MOVIE, [movie.id, movie.title]);
+async function putMovie(movieID, movie) {
+  return await db.execQuery(_query_strings.QUERY_STRINGS.UPDATE_MOVIE, [movieID, movie.title]);
 }
 
 async function deleteMovie(movieID) {
