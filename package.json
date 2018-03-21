@@ -4,7 +4,7 @@
   "description": "A catalog for your personal movie library",
   "main": "index.js",
   "scripts": {
-    "builddev": "babel src -d build --ignore __tests__",
+    "builddev": "babel src/server -d build/server --ignore __tests__ && ./node_modules/.bin/webpack --mode development",
     "start": "node index.js",
     "test": "jest"
   },
@@ -26,7 +26,16 @@
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.1",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "jest": "^22.4.2",
-    "regenerator-runtime": "^0.11.1"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "regenerator-runtime": "^0.11.1",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
   }
 }
