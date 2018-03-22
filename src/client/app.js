@@ -1,7 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider, createStore } from 'react-redux';
-import Routing from './routing';
 import Home from './home';
 
-const App = render(<Home />, document.getElementById('app'));
+let DATA_MODEL = {
+  user: { id: 1, first_name: 'Matthew', last_name: 'Burr' },
+  movies: [
+    { id: 1, title: 'The Avengers', poster: 'images/noposter.jpg' },
+    { id: 2, title: 'Captain America', poster: 'images/noposter.jpg' },
+    { id: 3, title: 'Thor', poster: 'images/noposter.jpg' },
+  ],
+  genres: [{ genre: 'Action' }, { genre: 'Comedy' }, { genre: 'Drama' }],
+};
+
+const App = render(<Home data={DATA_MODEL} />, document.getElementById('app'));
