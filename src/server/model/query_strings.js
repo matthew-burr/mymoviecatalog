@@ -24,7 +24,7 @@ export const QUERY_STRINGS = {
   `,
 
   // Movie Queries
-  SELECT_ALL_MOVIES: 'SELECT * FROM mmc.movie',
+  SELECT_ALL_MOVIES: 'SELECT id, title FROM mmc.movie',
   SELECT_ONE_MOVIE: 'SELECT * FROM mmc.movie WHERE id = $1',
   SELECT_MOVIE_GENRE: 'SELECT genre FROM mmc.movie_genre WHERE movie_id = $1',
   SELECT_MOVIE_TALENT: `
@@ -34,12 +34,15 @@ export const QUERY_STRINGS = {
         ON m.talent_id = t.id
      WHERE m.movie_id = $1`,
   INSERT_MOVIE: `
-    INSERT INTO mmc.movie (title)
-    VALUES ($1)
+    INSERT INTO mmc.movie (title, release_year, rating, poster)
+    VALUES ($1, $2, $3, $4)
     RETURNING *`,
   UPDATE_MOVIE: `
     UPDATE mmc.movie
        SET title = $2
+          ,release_year = $3
+          ,rating = $4
+          ,poster = $5
      WHERE id = $1
     RETURNING *
   `,

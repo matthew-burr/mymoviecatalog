@@ -111,6 +111,9 @@ function handleDelete(event) {
 function handleUpdate(event) {
   let movie = {
     title: $('#title').val(),
+    release_year: $('#release_year').val(),
+    rating: $('#rating').val(),
+    poster: $('#poster').val(),
   };
   let movie_id = $('#movie_id').val();
   fetch(`/movies/${movie_id}`, {
@@ -134,6 +137,9 @@ function handleUpdate(event) {
 function handleInsert(event) {
   let movie = {
     title: $('#title').val(),
+    release_year: $('#release_year').val(),
+    rating: $('#rating').val(),
+    poster: $('#poster').val(),
   };
   console.log(movie);
   fetch('/movies', {

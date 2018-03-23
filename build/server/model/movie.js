@@ -42,11 +42,11 @@ async function getMovieTalent(movieID) {
 }
 
 async function postMovie(movie) {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.INSERT_MOVIE, [movie.title]);
+  return await db.execQuery(_query_strings.QUERY_STRINGS.INSERT_MOVIE, [movie.title, movie.release_year || null, movie.rating || null, movie.poster || null]);
 }
 
 async function putMovie(movieID, movie) {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.UPDATE_MOVIE, [movieID, movie.title]);
+  return await db.execQuery(_query_strings.QUERY_STRINGS.UPDATE_MOVIE, [movieID, movie.title, movie.release_year || null, movie.rating || null, movie.poster || null]);
 }
 
 async function deleteMovie(movieID) {

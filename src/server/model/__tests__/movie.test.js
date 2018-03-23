@@ -115,28 +115,129 @@ describe('the core Movie functionality', () => {
   it('should add a new movie with you call postMovie', async () => {
     pg.__setQueryHandler((stmt, params) => {
       return {
-        rows: [{ id: 10, title: params[0] }],
+        rows: [
+          {
+            id: 10,
+            title: params[0],
+            release_year: params[1],
+            rating: params[2],
+            poster: params[3],
+          },
+        ],
       };
     });
     pg.__setExpectedQuery(QUERY_STRINGS.INSERT_MOVIE);
-    let data = await movie.postMovie({ title: 'The Last of the Mohicans' });
+    let data = await movie.postMovie({
+      title: 'The Last of the Mohicans',
+      release_year: 1993,
+      rating: 'PG-13',
+      poster: 'anything',
+    });
     expect(pg.wasExpectedQuery()).toBeTruthy();
     expect(data).toHaveLength(1);
-    expect(data).toEqual([{ id: 10, title: 'The Last of the Mohicans' }]);
+    expect(data).toEqual([
+      {
+        id: 10,
+        title: 'The Last of the Mohicans',
+        release_year: 1993,
+        rating: 'PG-13',
+        poster: 'anything',
+      },
+    ]);
+  });
+
+  it('should provide default values if fields are blank when you call postMovie', async () => {
+    pg.__setQueryHandler((stmt, params) => {
+      return {
+        rows: [
+          {
+            id: 10,
+            title: params[0],
+            release_year: params[1],
+            rating: params[2],
+            poster: params[3],
+          },
+        ],
+      };
+    });
+    pg.__setExpectedQuery(QUERY_STRINGS.INSERT_MOVIE);
+    let data = await movie.postMovie({
+      title: 'The Last of the Mohicans',
+    });
+    expect(pg.wasExpectedQuery()).toBeTruthy();
+    expect(data).toHaveLength(1);
+    expect(data).toEqual([
+      {
+        id: 10,
+        title: 'The Last of the Mohicans',
+        release_year: null,
+        rating: null,
+        poster: null,
+      },
+    ]);
   });
 
   it('should update the movie when you call putMovie', async () => {
     pg.__setExpectedQuery(QUERY_STRINGS.UPDATE_MOVIE);
     pg.__setQueryHandler((stmt, params) => {
       return {
-        rows: [{ id: params[0], title: params[1] }],
+        rows: [
+          {
+            id: params[0],
+            title: params[1],
+            release_year: params[2],
+            rating: params[3],
+            poster: params[4],
+          },
+        ],
+      };
+    });
+    let data = await movie.putMovie(10, {
+      title: 'The Last Starfighter',
+      release_year: 1986,
+      rating: 'PG',
+      poster: 'unknown',
+    });
+    expect(pg.wasExpectedQuery()).toBeTruthy();
+    expect(data).toEqual([
+      {
+        id: 10,
+        title: 'The Last Starfighter',
+        release_year: 1986,
+        rating: 'PG',
+        poster: 'unknown',
+      },
+    ]);
+  });
+
+  it('should update with default values if they are missing when you call putMovie', async () => {
+    pg.__setExpectedQuery(QUERY_STRINGS.UPDATE_MOVIE);
+    pg.__setQueryHandler((stmt, params) => {
+      return {
+        rows: [
+          {
+            id: params[0],
+            title: params[1],
+            release_year: params[2],
+            rating: params[3],
+            poster: params[4],
+          },
+        ],
       };
     });
     let data = await movie.putMovie(10, {
       title: 'The Last Starfighter',
     });
     expect(pg.wasExpectedQuery()).toBeTruthy();
-    expect(data).toEqual([{ id: 10, title: 'The Last Starfighter' }]);
+    expect(data).toEqual([
+      {
+        id: 10,
+        title: 'The Last Starfighter',
+        release_year: null,
+        rating: null,
+        poster: null,
+      },
+    ]);
   });
 
   it('should delete the movie when you call deleteMovie', async () => {

@@ -20,11 +20,22 @@ export async function getMovieTalent(movieID) {
 }
 
 export async function postMovie(movie) {
-  return await db.execQuery(QUERY_STRINGS.INSERT_MOVIE, [movie.title]);
+  return await db.execQuery(QUERY_STRINGS.INSERT_MOVIE, [
+    movie.title,
+    movie.release_year || null,
+    movie.rating || null,
+    movie.poster || null,
+  ]);
 }
 
 export async function putMovie(movieID, movie) {
-  return await db.execQuery(QUERY_STRINGS.UPDATE_MOVIE, [movieID, movie.title]);
+  return await db.execQuery(QUERY_STRINGS.UPDATE_MOVIE, [
+    movieID,
+    movie.title,
+    movie.release_year || null,
+    movie.rating || null,
+    movie.poster || null,
+  ]);
 }
 
 export async function deleteMovie(movieID) {

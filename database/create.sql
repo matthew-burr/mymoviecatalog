@@ -17,15 +17,18 @@ INSERT INTO mmc.talent (first_name, last_name) VALUES
 
 CREATE TABLE IF NOT EXISTS mmc.movie (
   id SERIAL NOT NULL PRIMARY KEY,
-  title TEXT NOT NULL UNIQUE
+  title TEXT NOT NULL UNIQUE,
+  release_year INTEGER NULL,
+  rating TEXT NULL,
+  poster TEXT NULL
 );
 
 DELETE FROM mmc.movie;
-INSERT INTO mmc.movie (title) VALUES
-('The Avengers'),
-('The Avengers: Age of Ultron'),
-('Captain America'),
-('Thor');
+INSERT INTO mmc.movie (title, release_year, rating, poster) VALUES
+('The Avengers', 2012, 'PG-13', 'https://ia.media-imdb.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_SX300.jpg'),
+('The Avengers: Age of Ultron', 2015, 'PG-13', 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg'),
+('Captain America', 2011, 'PG-13', 'https://ia.media-imdb.com/images/M/MV5BMTYzOTc2NzU3N15BMl5BanBnXkFtZTcwNjY3MDE3NQ@@._V1_SX300.jpg'),
+('Thor', 2011, 'PG-13', 'https://images-na.ssl-images-amazon.com/images/M/MV5BOGE4NzU1YTAtNzA3Mi00ZTA2LTg2YmYtMDJmMThiMjlkYjg2XkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg');
 
 CREATE TABLE IF NOT EXISTS mmc.movie_talent (
   movie_id INT NOT NULL REFERENCES mmc.movie (id) ON DELETE CASCADE,
