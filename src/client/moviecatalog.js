@@ -1,25 +1,14 @@
 import React from 'react';
 import { Movie } from './movie';
+import { Link } from 'react-router-dom';
 
 export default class MovieCatalog extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { movies: [] };
-  }
-
-  componentDidMount() {
-    fetch('/movies')
-      .then(results => {
-        return results.json();
-      })
-      .then(movies => {
-        this.setState({ movies: movies });
-      })
-      .catch(err => console.log(err));
   }
 
   render() {
-    let { movies } = this.state;
+    let { movies } = this.props;
     return (
       <div>
         {movies.map((movie, index) => (
@@ -29,7 +18,7 @@ export default class MovieCatalog extends React.Component {
             poster={movie.poster ? movie.poster : 'images/noposter.jpg'}
           />
         ))}
-        <button type="button">Add</button>
+        <Link to="/addmovie">Add</Link>
       </div>
     );
   }
