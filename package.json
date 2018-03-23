@@ -4,7 +4,8 @@
   "description": "A catalog for your personal movie library",
   "main": "index.js",
   "scripts": {
-    "builddev": "babel src/server -d build/server --ignore __tests__ && ./node_modules/.bin/webpack --mode development",
+    "builddev":
+      "babel src/server -d build/server --ignore __tests__ && ./node_modules/.bin/webpack --mode development -w",
     "start": "node index.js",
     "test": "jest"
   },
