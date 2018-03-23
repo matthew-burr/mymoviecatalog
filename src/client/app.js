@@ -15,11 +15,13 @@ let DATA_MODEL = {
   genres: [{ genre: 'Action' }, { genre: 'Comedy' }, { genre: 'Drama' }],
 };
 
+const AddMovieWithHistory = withRouter(AddMovie);
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { movies: DATA_MODEL.movies };
     this.handleAddMovie = this.handleAddMovie.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentDidMount() {
@@ -53,6 +55,10 @@ class App extends React.Component {
       });
   }
 
+  handleCancel() {
+    this.props.history.push('/');
+  }
+
   render() {
     return (
       <div>
@@ -62,7 +68,12 @@ class App extends React.Component {
         />
         <Route
           path="/addmovie"
-          render={() => <AddMovie handleAddMovie={this.handleAddMovie} />}
+          render={() => (
+            <AddMovie
+              handleAddMovie={this.handleAddMovie}
+              onCancel={this.handleCancel}
+            />
+          )}
         />
       </div>
     );

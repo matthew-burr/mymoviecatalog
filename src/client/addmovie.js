@@ -1,32 +1,18 @@
 // Add.js adds a new Movie to the Catalog
 import React from 'react';
 import styled from 'styled-components';
-
-const Label = styled.label`
-  display: block;
-`;
-const Overlay = styled.div`
-  z-order: 1000;
-  position: fixed;
-  top: 25%;
-  left: 25%;
-  background-color: white;
-  width: 50%;
-  height: 50%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 20px;
-`;
+import { LabeledInput, Overlay, Label } from './components';
 
 export default class AddMovie extends React.Component {
   constructor(props) {
     super(props);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleAddMovie = this.handleAddMovie.bind(this);
-    this.state = { title: '' };
+    this.state = { title: '', release_year: '', rating: '', poster: '' };
   }
 
-  handleTitleChange(event) {
-    this.setState({ title: event.target.value });
+  handleFieldChange(newState) {
+    this.setState(newState);
   }
 
   handleAddMovie(event) {
@@ -40,15 +26,40 @@ export default class AddMovie extends React.Component {
       <Overlay>
         <h1>Add a New Movie</h1>
         <form onSubmit={this.handleAddMovie}>
-          <Label htmlFor="movieTitle">Title</Label>
-          <input
+          <LabeledInput
             id="movieTitle"
+            label="Title"
             type="text"
             placeholder="Movie Title"
             value={this.state.title}
-            onChange={this.handleTitleChange}
+            onChange={event =>
+              this.handleFieldChange({ title: event.target.value })
+            }
+          />
+          <LabeledInput
+            id="releaseYear"
+            label="Year"
+            type="number"
+            placeholder="2018"
+            value={this.state.release_year}
+            onChange={event =>
+              this.handleFieldChange({ release_year: event.target.value })
+            }
+          />
+          <LabeledInput
+            id="rating"
+            label="Rating"
+            type="text"
+            placeholder="PG, PG-13, etc."
+            value={this.state.rating}
+            onChange={event =>
+              this.handleFieldChange({ rating: event.target.value })
+            }
           />
           <button type="submit">Add</button>
+          <button type="button" onClick={this.props.onCancel}>
+            Cancel
+          </button>
         </form>
       </Overlay>
     );
