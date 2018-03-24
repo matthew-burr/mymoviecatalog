@@ -1,7 +1,7 @@
 import React from 'react';
 import { Movie } from './movie';
 import { Link } from 'react-router-dom';
-import { WrappingLayout, StyledLink } from './components';
+import { StyledLink, Layout } from './components';
 
 const AddButton = StyledLink.extend`
   z-index: 500;
@@ -18,12 +18,12 @@ export default class MovieCatalog extends React.Component {
   render() {
     let { movies } = this.props;
     return (
-      <WrappingLayout>
+      <Layout wrapping>
         {movies.map((movie, index) => <Movie key={index} movie={movie} />)}
         <AddButton to="/addmovie" size="60px" color="rgb(200, 0, 0)">
           <span className="fa fa-plus-circle" />
         </AddButton>
-      </WrappingLayout>
+      </Layout>
     );
   }
 }

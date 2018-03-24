@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const SideBarTitle = styled.h1`
   text-align: center;
+  color: white;
 `;
 
 const UnmarkedList = styled.ul`

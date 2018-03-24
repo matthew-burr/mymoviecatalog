@@ -2,16 +2,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
-  VerticalLayout,
-  HorizontalLayout,
-  ScrollableHorizontalLayout,
-  ScrollableVerticalLayout,
   LabeledInput,
   Overlay,
   ShadowPanel,
   Label,
-  ScrollableWrappingLayout,
   StyledLink,
+  Layout,
+  Button,
 } from './components';
 
 const MiniMoviePoster = styled.img`
@@ -32,6 +29,11 @@ const CloseButton = StyledLink.extend`
   right: 15px;
 `;
 
+const ConstrainedLayout = styled(Layout)`
+  min-width: 50%;
+  padding-left: 5px;
+`;
+
 const SearchResultItem = ({ movie, onClick }) => (
   <MiniMoviePanel onClick={() => onClick(movie)}>
     <MiniMoviePoster src={movie.poster} />
@@ -41,13 +43,19 @@ const SearchResultItem = ({ movie, onClick }) => (
   </MiniMoviePanel>
 );
 
-const SearchResult = ({ movies, onResultClick }) => (
-  <ScrollableWrappingLayout>
-    {movies.map((movie, index) => (
-      <SearchResultItem movie={movie} key={index} onClick={onResultClick} />
-    ))}
-  </ScrollableWrappingLayout>
-);
+const SearchResult = ({ movies, onResultClick }) => {
+  if (movies && movies.length) {
+    return (
+      <Layout scrollable wrapping>
+        {movies.map((movie, index) => (
+          <SearchResultItem movie={movie} key={index} onClick={onResultClick} />
+        ))}
+      </Layout>
+    );
+  }
+
+  return null;
+};
 
 export default class AddMovie extends React.Component {
   constructor(props) {
@@ -101,6 +109,7 @@ export default class AddMovie extends React.Component {
 
   handleAddMovie(event) {
     event.preventDefault();
+    if (this.state.title.trim === '') return;
     let movie = {
       title: this.state.title,
       release_year: this.state.release_year,
@@ -115,10 +124,10 @@ export default class AddMovie extends React.Component {
         <CloseButton to="/" size="25px" color="gray">
           <span className="fa fa-close" />
         </CloseButton>
-        <VerticalLayout>
+        <Layout vertical>
           <h1>Add a New Movie</h1>
-          <HorizontalLayout>
-            <VerticalLayout>
+          <Layout>
+            <ConstrainedLayout vertical>
               <form onSubmit={this.handleAddMovie}>
                 <LabeledInput
                   id="movieTitle"
@@ -130,9 +139,9 @@ export default class AddMovie extends React.Component {
                     this.handleFieldChange({ title: event.target.value })
                   }
                 />
-                <button type="button" onClick={this.handleSearch}>
+                <Button type="button" onClick={this.handleSearch}>
                   Search
-                </button>
+                </Button>
                 <LabeledInput
                   id="releaseYear"
                   label="Year"
@@ -163,15 +172,15 @@ export default class AddMovie extends React.Component {
                     this.handleFieldChange({ poster: event.target.value })
                   }
                 />
-                <button type="submit">Add</button>
+                <Button type="submit">Add</Button>
               </form>
-            </VerticalLayout>
+            </ConstrainedLayout>
             <SearchResult
               movies={this.state.searchResults}
               onResultClick={this.handleResultClick}
             />
-          </HorizontalLayout>
-        </VerticalLayout>
+          </Layout>
+        </Layout>
       </Overlay>
     );
   }

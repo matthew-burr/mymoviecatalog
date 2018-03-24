@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { ShadowPanel, VerticalLayout } from './components';
+import { ShadowPanel, Layout } from './components';
 import { Link } from 'react-router-dom';
 
 // copies example from https://www.w3schools.com/css/css3_shadows.asp
@@ -11,28 +11,35 @@ const Poster = styled.img`
   border-bottom: 1px solid rgb(200, 200, 200);
 `;
 
-const PosterCaption = styled.p`
+const PosterCaption = styled.div`
   text-align: center;
+  min-height: 2.5em;
 `;
 
 const MoviePanel = ShadowPanel.extend`
   width: 200px;
   margin: 10px;
   display: inline-block;
+  background-color: white;
+`;
+
+const UngarnishedLink = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;
 
 export const Movie = ({ movie }) => (
   <MoviePanel>
-    <Link
+    <UngarnishedLink
       to={{
         pathname: '/editmovie',
         state: { movie: movie },
       }}
     >
-      <VerticalLayout>
+      <Layout vertical>
         <Poster src={movie.poster || 'images/noposter.jpg'} />
         <PosterCaption>{movie.title}</PosterCaption>
-      </VerticalLayout>
-    </Link>
+      </Layout>
+    </UngarnishedLink>
   </MoviePanel>
 );

@@ -2,18 +2,19 @@ import React from 'react';
 import UserInfo from './userinfo';
 import Search from './search';
 import styled from 'styled-components';
+import { ShadowPanel } from './components';
 
-const HeaderContainer = styled.div`
+const HeaderContainer = ShadowPanel.extend`
   display: flex;
   width: 100%;
   background-color: rgb(200, 0, 0);
   padding-left: 20px;
+  margin-bottom: 20px;
 `;
 
 const Title = styled.h1`
   color: white;
   font-size: 36pt;
-  font-family: Arial, sans-serif;
 `;
 
 const SiteTitle = ({ children }) => (

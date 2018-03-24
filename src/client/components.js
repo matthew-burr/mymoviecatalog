@@ -3,39 +3,23 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const STANDARD_BOX_SHADOW =
-  '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+  '0 4px 8px 0 rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.24)';
 
 const STANDARD_TEXT_SHADOW = '2px 2px 4px #000000';
 
-export const HorizontalLayout = styled.div`
+const STANDARD_RED = 'rgb(200, 0, 0)';
+
+export const Layout = styled.div`
   display: flex;
-  flex-direction: row;
-`;
-
-export const ScrollableHorizontalLayout = HorizontalLayout.extend`
-  overflow: auto;
-`;
-
-export const VerticalLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const ScrollableVerticalLayout = VerticalLayout.extend`
-  overflow: auto;
-`;
-
-export const WrappingLayout = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-export const ScrollableWrappingLayout = WrappingLayout.extend`
-  overflow: auto;
+  flex-direction: ${props => (props.vertical ? 'column' : 'row')};
+  overflow: ${props => (props.scrollable ? 'auto' : 'hidden')};
+  flex-wrap: ${props => (props.wrapping ? 'wrap' : 'nowrap')};
+  flex-grow: 1;
 `;
 
 export const Label = styled.label`
   display: block;
+  margin-top: 1em;
 `;
 
 export const ShadowPanel = styled.div`
@@ -52,6 +36,7 @@ export const Overlay = ShadowPanel.extend`
   height: ${props => (props.height ? props.height : '50%')};
   padding: 20px;
   display: flex;
+  border: 1px solid rgb(20, 20, 20);
 `;
 
 export const StyledLink = styled(Link)`
@@ -62,9 +47,27 @@ export const StyledLink = styled(Link)`
   text-shadow: ${props => (props.hasShadow ? STANDARD_TEXT_SHADOW : '')};
 `;
 
+export const Input = styled.input`
+  border: 1px solid ${props => (props.borderColor ? props.borderColor : 'gray')};
+  border-radius: 5px;
+  height: 2.5em;
+  width: ${props => (props.inputWidth ? props.inputWidth : '100%')};
+  padding-left: 0.5em;
+`;
+
+export const Button = styled.button`
+  border: 1px solid ${props => (props.borderColor ? props.borderColor : 'gray')};
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  height: 2.5em;
+  border-radius: 5px;
+  background-color: ${STANDARD_RED};
+  color: white;
+`;
+
 export const LabeledInput = props => (
   <div>
     <Label htmlFor={props.id}>{props.label}</Label>
-    <input {...props} />
+    <Input {...props} />
   </div>
 );

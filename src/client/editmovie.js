@@ -2,16 +2,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
-  VerticalLayout,
-  HorizontalLayout,
-  ScrollableHorizontalLayout,
-  ScrollableVerticalLayout,
   LabeledInput,
   Overlay,
   ShadowPanel,
   Label,
-  ScrollableWrappingLayout,
   StyledLink,
+  Layout,
+  Button,
 } from './components';
 
 const MiniMoviePoster = styled.img`
@@ -38,6 +35,7 @@ export default class EditMovie extends React.Component {
     let { movie } = this.props;
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleEditMovie = this.handleEditMovie.bind(this);
+    this.handleDeleteMovie = this.handleDeleteMovie.bind(this);
     this.state = {
       id: movie.id || 0,
       title: movie.title || '',
@@ -63,16 +61,23 @@ export default class EditMovie extends React.Component {
     this.props.handleEditMovie(movie);
   }
 
+  handleDeleteMovie(event) {
+    let movie = {
+      id: this.state.id,
+    };
+    this.props.onDeleteMovie(movie);
+  }
+
   render() {
     return (
       <Overlay height="80%" top="10%" width="80%" left="10%">
         <CloseButton to="/" size="25px" color="gray">
           <span className="fa fa-close" />
         </CloseButton>
-        <VerticalLayout>
+        <Layout vertical>
           <h1>Edit Your Movie</h1>
-          <HorizontalLayout>
-            <VerticalLayout>
+          <Layout>
+            <Layout vertical>
               <form onSubmit={this.handleEditMovie}>
                 <LabeledInput
                   id="movieTitle"
@@ -114,11 +119,14 @@ export default class EditMovie extends React.Component {
                     this.handleFieldChange({ poster: event.target.value })
                   }
                 />
-                <button type="submit">Save Changes</button>
+                <Button type="submit">Save Changes</Button>
+                <Button type="button" onClick={this.handleDeleteMovie}>
+                  Delete Movie
+                </Button>
               </form>
-            </VerticalLayout>
-          </HorizontalLayout>
-        </VerticalLayout>
+            </Layout>
+          </Layout>
+        </Layout>
       </Overlay>
     );
   }

@@ -24,6 +24,7 @@ class App extends React.Component {
     this.state = { movies: DATA_MODEL.movies };
     this.handleAddMovie = this.handleAddMovie.bind(this);
     this.handleEditMovie = this.handleEditMovie.bind(this);
+    this.handleDeleteMovie = this.handleDeleteMovie.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
 
@@ -54,7 +55,7 @@ class App extends React.Component {
           movies: [...this.state.movies, ...movie],
         });
         this.setState(newState);
-        this.props.history.push('/');
+        this.props.history.push('/addMovie');
       });
   }
 
@@ -84,6 +85,23 @@ class App extends React.Component {
       });
   }
 
+  handleDeleteMovie(movie) {
+    fetch(`/movies/${movie.id}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    }).then(response => {
+      if (response.ok) {
+        let movies = this.state.movies;
+        let movieIndex = movies.findIndex(item => item.id === movie.id);
+        movies.splice(movieIndex, 1);
+        this.setState({ movies: movies });
+        this.props.history.push('/');
+      }
+    });
+  }
+
   handleCancel() {
     this.props.history.push('/');
   }
@@ -109,6 +127,7 @@ class App extends React.Component {
           render={() => (
             <EditMovie
               handleEditMovie={this.handleEditMovie}
+              onDeleteMovie={this.handleDeleteMovie}
               movie={this.props.location.state.movie}
             />
           )}
