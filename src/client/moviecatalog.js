@@ -1,6 +1,7 @@
 import React from 'react';
 import { Movie } from './movie';
 import { Link } from 'react-router-dom';
+import { WrappingLayout } from './components';
 
 export default class MovieCatalog extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class MovieCatalog extends React.Component {
   render() {
     let { movies } = this.props;
     return (
-      <div>
+      <WrappingLayout>
         {movies.map((movie, index) => (
           <Movie
             key={index}
@@ -19,7 +20,7 @@ export default class MovieCatalog extends React.Component {
           />
         ))}
         <Link to="/addmovie">Add</Link>
-      </div>
+      </WrappingLayout>
     );
   }
 }

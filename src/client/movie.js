@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { ShadowPanel, VerticalLayout } from './components';
 
 // copies example from https://www.w3schools.com/css/css3_shadows.asp
 const Poster = styled.img`
@@ -9,13 +10,11 @@ const Poster = styled.img`
   border-bottom: 1px solid rgb(200, 200, 200);
 `;
 
-const PosterCaption = styled.div`
+const PosterCaption = styled.p`
   text-align: center;
-  padding: 10px;
 `;
 
-const MoviePanel = styled.div`
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+const MoviePanel = ShadowPanel.extend`
   width: 200px;
   margin: 10px;
   display: inline-block;
@@ -23,8 +22,10 @@ const MoviePanel = styled.div`
 
 export const Movie = ({ title, poster }) => (
   <MoviePanel>
-    <Poster src={poster} />
-    <PosterCaption>{title}</PosterCaption>
+    <VerticalLayout>
+      <Poster src={poster} />
+      <PosterCaption>{title}</PosterCaption>
+    </VerticalLayout>
   </MoviePanel>
 );
 

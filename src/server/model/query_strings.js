@@ -24,7 +24,7 @@ export const QUERY_STRINGS = {
   `,
 
   // Movie Queries
-  SELECT_ALL_MOVIES: 'SELECT id, title FROM mmc.movie',
+  SELECT_ALL_MOVIES: 'SELECT id, title, poster FROM mmc.movie',
   SELECT_ONE_MOVIE: 'SELECT * FROM mmc.movie WHERE id = $1',
   SELECT_MOVIE_GENRE: 'SELECT genre FROM mmc.movie_genre WHERE movie_id = $1',
   SELECT_MOVIE_TALENT: `
