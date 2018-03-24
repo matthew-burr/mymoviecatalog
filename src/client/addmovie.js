@@ -10,6 +10,8 @@ import {
   Layout,
   Button,
 } from './components';
+const BAD_IMAGE_SERVER = 'ia.media-imdb.com';
+const GOOD_IMAGE_SERVER = 'images-na.ssl-images-amazon.com';
 
 const MiniMoviePoster = styled.img`
   width: 100%;
@@ -91,7 +93,7 @@ export default class AddMovie extends React.Component {
             searchResults: result.Search.map(item => ({
               title: item.Title,
               release_year: item.Year,
-              poster: item.Poster,
+              poster: item.Poster.replace(BAD_IMAGE_SERVER, GOOD_IMAGE_SERVER),
             })),
           });
         } else console.log(result);
