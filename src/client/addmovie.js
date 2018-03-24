@@ -66,7 +66,7 @@ export default class AddMovie extends React.Component {
     const term = this.state.title;
     if (!term) return;
 
-    const API_BASE = 'http://www.omdbapi.com/?apikey=4ba5e3af';
+    const API_BASE = 'https://www.omdbapi.com/?apikey=4ba5e3af';
     fetch(API_BASE + `&s=${term}`)
       .then(response => response.json())
       .then(result => {
