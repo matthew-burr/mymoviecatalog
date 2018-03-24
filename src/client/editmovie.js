@@ -32,36 +32,18 @@ const CloseButton = StyledLink.extend`
   right: 15px;
 `;
 
-const SearchResultItem = ({ movie, onClick }) => (
-  <MiniMoviePanel onClick={() => onClick(movie)}>
-    <MiniMoviePoster src={movie.poster} />
-    <p>
-      {movie.title} ({movie.release_year})
-    </p>
-  </MiniMoviePanel>
-);
-
-const SearchResult = ({ movies, onResultClick }) => (
-  <ScrollableWrappingLayout>
-    {movies.map((movie, index) => (
-      <SearchResultItem movie={movie} key={index} onClick={onResultClick} />
-    ))}
-  </ScrollableWrappingLayout>
-);
-
-export default class AddMovie extends React.Component {
+export default class EditMovie extends React.Component {
   constructor(props) {
     super(props);
+    let { movie } = this.props;
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleResultClick = this.handleResultClick.bind(this);
-    this.handleAddMovie = this.handleAddMovie.bind(this);
+    this.handleEditMovie = this.handleEditMovie.bind(this);
     this.state = {
-      title: '',
-      release_year: '',
-      rating: '',
-      poster: '',
-      searchResults: [],
+      id: movie.id || 0,
+      title: movie.title || '',
+      release_year: movie.release_year || '',
+      rating: movie.rating || '',
+      poster: movie.poster || '',
     };
   }
 
@@ -69,44 +51,16 @@ export default class AddMovie extends React.Component {
     this.setState(newState);
   }
 
-  handleSearch() {
-    const term = this.state.title;
-    if (!term) return;
-
-    const API_BASE = 'https://www.omdbapi.com/?apikey=4ba5e3af';
-    fetch(API_BASE + `&s=${term}`)
-      .then(response => response.json())
-      .then(result => {
-        if (result.Response === 'True' && result.Search.length) {
-          console.log('Setting state');
-          this.setState({
-            searchResults: result.Search.map(item => ({
-              title: item.Title,
-              release_year: item.Year,
-              poster: item.Poster,
-            })),
-          });
-        } else console.log(result);
-      })
-      .catch(err => console.log(err));
-  }
-
-  handleResultClick(movie) {
-    this.setState({
-      title: movie.title,
-      release_year: movie.release_year,
-      poster: movie.poster,
-    });
-  }
-
-  handleAddMovie(event) {
+  handleEditMovie(event) {
     event.preventDefault();
     let movie = {
+      id: this.state.id,
       title: this.state.title,
       release_year: this.state.release_year,
+      rating: this.state.rating,
       poster: this.state.poster || 'images/noposter.jpg',
     };
-    this.props.handleAddMovie(movie);
+    this.props.handleEditMovie(movie);
   }
 
   render() {
@@ -116,10 +70,10 @@ export default class AddMovie extends React.Component {
           <span className="fa fa-close" />
         </CloseButton>
         <VerticalLayout>
-          <h1>Add a New Movie</h1>
+          <h1>Edit Your Movie</h1>
           <HorizontalLayout>
             <VerticalLayout>
-              <form onSubmit={this.handleAddMovie}>
+              <form onSubmit={this.handleEditMovie}>
                 <LabeledInput
                   id="movieTitle"
                   label="Title"
@@ -130,9 +84,6 @@ export default class AddMovie extends React.Component {
                     this.handleFieldChange({ title: event.target.value })
                   }
                 />
-                <button type="button" onClick={this.handleSearch}>
-                  Search
-                </button>
                 <LabeledInput
                   id="releaseYear"
                   label="Year"
@@ -163,13 +114,9 @@ export default class AddMovie extends React.Component {
                     this.handleFieldChange({ poster: event.target.value })
                   }
                 />
-                <button type="submit">Add</button>
+                <button type="submit">Save Changes</button>
               </form>
             </VerticalLayout>
-            <SearchResult
-              movies={this.state.searchResults}
-              onResultClick={this.handleResultClick}
-            />
           </HorizontalLayout>
         </VerticalLayout>
       </Overlay>

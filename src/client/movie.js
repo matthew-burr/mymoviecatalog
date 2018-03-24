@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { ShadowPanel, VerticalLayout } from './components';
+import { Link } from 'react-router-dom';
 
 // copies example from https://www.w3schools.com/css/css3_shadows.asp
 const Poster = styled.img`
@@ -20,16 +21,18 @@ const MoviePanel = ShadowPanel.extend`
   display: inline-block;
 `;
 
-export const Movie = ({ title, poster }) => (
-  <MoviePanel hasShadow>
-    <VerticalLayout>
-      <Poster src={poster} />
-      <PosterCaption>{title}</PosterCaption>
-    </VerticalLayout>
+export const Movie = ({ movie }) => (
+  <MoviePanel>
+    <Link
+      to={{
+        pathname: '/editmovie',
+        state: { movie: movie },
+      }}
+    >
+      <VerticalLayout>
+        <Poster src={movie.poster || 'images/noposter.jpg'} />
+        <PosterCaption>{movie.title}</PosterCaption>
+      </VerticalLayout>
+    </Link>
   </MoviePanel>
 );
-
-Movie.propTypes = {
-  title: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
-};

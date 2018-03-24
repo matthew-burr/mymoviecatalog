@@ -19,13 +19,7 @@ export default class MovieCatalog extends React.Component {
     let { movies } = this.props;
     return (
       <WrappingLayout>
-        {movies.map((movie, index) => (
-          <Movie
-            key={index}
-            title={movie.title}
-            poster={movie.poster ? movie.poster : 'images/noposter.jpg'}
-          />
-        ))}
+        {movies.map((movie, index) => <Movie key={index} movie={movie} />)}
         <AddButton to="/addmovie" size="60px" color="rgb(200, 0, 0)">
           <span className="fa fa-plus-circle" />
         </AddButton>

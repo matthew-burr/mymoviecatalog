@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import Home from './home';
 import AddMovie from './addmovie';
+import EditMovie from './editmovie';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
@@ -16,11 +17,13 @@ let DATA_MODEL = {
 };
 
 const AddMovieWithHistory = withRouter(AddMovie);
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { movies: DATA_MODEL.movies };
     this.handleAddMovie = this.handleAddMovie.bind(this);
+    this.handleEditMovie = this.handleEditMovie.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
 
@@ -55,6 +58,32 @@ class App extends React.Component {
       });
   }
 
+  handleEditMovie(movie) {
+    fetch(`/movies/${movie.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(movie),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        let updatedMovie = data[0];
+        let newState = {
+          movies: this.state.movies.map(movie => {
+            if (movie.id === updatedMovie.id) {
+              return updatedMovie;
+            }
+            return movie;
+          }),
+        };
+        this.setState(newState);
+        this.props.history.push('/');
+      });
+  }
+
   handleCancel() {
     this.props.history.push('/');
   }
@@ -72,6 +101,15 @@ class App extends React.Component {
             <AddMovie
               handleAddMovie={this.handleAddMovie}
               onCancel={this.handleCancel}
+            />
+          )}
+        />
+        <Route
+          path="/editmovie"
+          render={() => (
+            <EditMovie
+              handleEditMovie={this.handleEditMovie}
+              movie={this.props.location.state.movie}
             />
           )}
         />
