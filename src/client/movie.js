@@ -21,7 +21,7 @@ const MoviePanel = ShadowPanel.extend`
 `;
 
 export const Movie = ({ title, poster }) => (
-  <MoviePanel>
+  <MoviePanel hasShadow>
     <VerticalLayout>
       <Poster src={poster} />
       <PosterCaption>{title}</PosterCaption>

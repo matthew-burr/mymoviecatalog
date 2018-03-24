@@ -11,6 +11,7 @@ import {
   ShadowPanel,
   Label,
   ScrollableWrappingLayout,
+  StyledLink,
 } from './components';
 
 const MiniMoviePoster = styled.img`
@@ -23,6 +24,12 @@ const MiniMoviePanel = ShadowPanel.extend`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const CloseButton = StyledLink.extend`
+  position: absolute;
+  top: 15px;
+  right: 15px;
 `;
 
 const SearchResultItem = ({ movie, onClick }) => (
@@ -104,6 +111,9 @@ export default class AddMovie extends React.Component {
   render() {
     return (
       <Overlay height="80%" top="10%" width="80%" left="10%">
+        <CloseButton to="/" size="25px" color="gray">
+          <span className="fa fa-close" />
+        </CloseButton>
         <VerticalLayout>
           <h1>Add a New Movie</h1>
           <HorizontalLayout>
@@ -153,9 +163,6 @@ export default class AddMovie extends React.Component {
                   }
                 />
                 <button type="submit">Add</button>
-                <button type="button" onClick={this.props.onCancel}>
-                  Cancel
-                </button>
               </form>
             </VerticalLayout>
             <SearchResult

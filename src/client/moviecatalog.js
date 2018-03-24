@@ -1,7 +1,14 @@
 import React from 'react';
 import { Movie } from './movie';
 import { Link } from 'react-router-dom';
-import { WrappingLayout } from './components';
+import { WrappingLayout, StyledLink } from './components';
+
+const AddButton = StyledLink.extend`
+  z-index: 500;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+`;
 
 export default class MovieCatalog extends React.Component {
   constructor(props) {
@@ -19,7 +26,9 @@ export default class MovieCatalog extends React.Component {
             poster={movie.poster ? movie.poster : 'images/noposter.jpg'}
           />
         ))}
-        <Link to="/addmovie">Add</Link>
+        <AddButton to="/addmovie" size="60px" color="rgb(200, 0, 0)">
+          <span className="fa fa-plus-circle" />
+        </AddButton>
       </WrappingLayout>
     );
   }
