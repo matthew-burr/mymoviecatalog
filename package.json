@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "builddev":
+      "babel src/server -d build/server --ignore __tests__ && ./node_modules/.bin/webpack --mode development",
+    "buildwatch":
       "babel src/server -d build/server --ignore __tests__ && ./node_modules/.bin/webpack --mode development -w",
     "start": "node index.js",
     "test": "jest"

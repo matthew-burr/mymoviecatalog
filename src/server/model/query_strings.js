@@ -1,4 +1,10 @@
 export const QUERY_STRINGS = {
+  // User Queries
+  ADD_USER: `
+    INSERT INTO mmc.user (email, first_name, last_name, password) 
+    VALUES ($1, $2, $3, $5) RETURNING id`,
+  GET_USER: `SELECT * FROM mmc.user WHERE email = $1`,
+
   // Genre Queries
   SELECT_ALL_GENRES: 'SELECT unnest(enum_range(NULL::mmc.genre)) AS genre',
   SELECT_GENRE_MOVIES: `
