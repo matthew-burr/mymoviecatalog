@@ -64,10 +64,10 @@ describe('how a user object works', () => {
     pg.__setQueryHandler((query, params) => {
       console.log(params[0]);
       console.log(params);
-      return { rows: MOCK_DATA.filter(row => row.id == params[0]) };
+      return { rows: MOCK_DATA.filter(row => row.email == params[0]) };
     });
 
-    let data = await user.getUser(2);
+    let data = await user.getUser('amy@mail.com');
     expect(data).toEqual([
       {
         id: 2,

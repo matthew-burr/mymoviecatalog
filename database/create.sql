@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS mmc.user (
 );
 
 DELETE FROM mmc.user;
-INSERT INTO mmc.user (email) VALUES
-('matt.d.burr@gmail.com'),
-('mdburr@outlook.com');
+INSERT INTO mmc.user (email, first_name, last_name, password) VALUES
+('matt.d.burr@gmail.com', 'Matt', 'Burr', 'nothing'),
+('mdburr@outlook.com', 'Matthew', 'Burr', 'also_nothing');
 
 CREATE TABLE IF NOT EXISTS mmc.user_movie (
   movie_id INT NOT NULL REFERENCES mmc.movie (id) ON DELETE CASCADE,

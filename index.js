@@ -3,15 +3,39 @@ const bodyParser = require('body-parser');
 const talent = require('./build/server/model/talent.js');
 const genres = require('./build/server/model/genre.js');
 const movies = require('./build/server/model/movie');
+const mmcuser = require('./build/server/model/user.js');
+const jwt = require('jsonwebtoken');
 const app = express();
 const PORT = process.env.PORT || 5000;
+const SECRET = 'n0b0dy-should-ever-no-this-secr3t';
 
 app.use(express.static('build/public'));
 app.use(bodyParser.json());
 app.use('/testing', express.static('testing'));
 
+// User endpoints
+app.post('/log_in', async (req, res) => {
+  verifyLogin(req);
+  let { username, password } = req.body;
+
+  if (username && password) {
+    let [account] = await mmcuser.getUser(username);
+    if (password === account.password) {
+      let token = jwt.sign({ id: account.id }, SECRET);
+      res.send({ success: true, token: token });
+      return;
+    }
+  }
+
+  res.send({ success: false });
+});
+/*
+app.use((req, res, next) => {
+  if (verifyLogin(req)) return next();
+  res.status(401).send({ error: 'Not logged in' });
+});
+*/
 // Talent endpoints
-// TODO: Look into nesting endpoints
 app.get('/talent', (req, res) => {
   respondWith(res, talent.getTalent);
 });
@@ -93,6 +117,19 @@ function respondWith(res, func, ...params) {
 function sendError(res, error) {
   console.log('Error: ' + error);
   res.status(400).json({ error: error });
+}
+
+function verifyLogin(req) {
+  let { token } = req.body;
+  if (token) {
+    try {
+      req.mmcUserID = jwt.verify(token, SECRET).id;
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+  return false;
 }
 
 app.all('*', (req, res) =>
