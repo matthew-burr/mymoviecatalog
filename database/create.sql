@@ -3,6 +3,19 @@ DROP SCHEMA mmc CASCADE;
 CREATE SCHEMA IF NOT EXISTS mmc;
 CREATE TYPE mmc.genre AS ENUM ('action', 'comedy', 'documentary', 'drama', 'romance');
 
+CREATE TABLE IF NOT EXISTS mmc.user (
+  id SERIAL NOT NULL PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  first_name TEXT NULL,
+  last_name TEXT NULL,
+  password TEXT NULL
+);
+
+DELETE FROM mmc.user;
+INSERT INTO mmc.user (email, first_name, last_name, password) VALUES
+('matt.d.burr@gmail.com', 'Matt', 'Burr', 'nothing'),
+('mdburr@outlook.com', 'Matthew', 'Burr', 'also_nothing');
+
 CREATE TABLE IF NOT EXISTS mmc.talent (
   id SERIAL NOT NULL PRIMARY KEY,
   first_name TEXT NOT NULL,
@@ -17,6 +30,7 @@ INSERT INTO mmc.talent (first_name, last_name) VALUES
 
 CREATE TABLE IF NOT EXISTS mmc.movie (
   id SERIAL NOT NULL PRIMARY KEY,
+  user_id INT NOT NULL REFERENCES mmc.user (id),
   title TEXT NOT NULL UNIQUE,
   release_year INTEGER NULL,
   rating TEXT NULL,
@@ -24,11 +38,11 @@ CREATE TABLE IF NOT EXISTS mmc.movie (
 );
 
 DELETE FROM mmc.movie;
-INSERT INTO mmc.movie (title, release_year, rating, poster) VALUES
-('The Avengers', 2012, 'PG-13', 'https://ia.media-imdb.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_SX300.jpg'),
-('The Avengers: Age of Ultron', 2015, 'PG-13', 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg'),
-('Captain America', 2011, 'PG-13', 'https://ia.media-imdb.com/images/M/MV5BMTYzOTc2NzU3N15BMl5BanBnXkFtZTcwNjY3MDE3NQ@@._V1_SX300.jpg'),
-('Thor', 2011, 'PG-13', 'https://images-na.ssl-images-amazon.com/images/M/MV5BOGE4NzU1YTAtNzA3Mi00ZTA2LTg2YmYtMDJmMThiMjlkYjg2XkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg');
+INSERT INTO mmc.movie (user_id, title, release_year, rating, poster) VALUES
+(1, 'The Avengers', 2012, 'PG-13', 'https://ia.media-imdb.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_SX300.jpg'),
+(1, 'The Avengers: Age of Ultron', 2015, 'PG-13', 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg'),
+(1, 'Captain America', 2011, 'PG-13', 'https://ia.media-imdb.com/images/M/MV5BMTYzOTc2NzU3N15BMl5BanBnXkFtZTcwNjY3MDE3NQ@@._V1_SX300.jpg'),
+(1, 'Thor', 2011, 'PG-13', 'https://images-na.ssl-images-amazon.com/images/M/MV5BOGE4NzU1YTAtNzA3Mi00ZTA2LTg2YmYtMDJmMThiMjlkYjg2XkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg');
 
 CREATE TABLE IF NOT EXISTS mmc.movie_talent (
   movie_id INT NOT NULL REFERENCES mmc.movie (id) ON DELETE CASCADE,
@@ -63,33 +77,3 @@ SELECT
  WHERE (m.title LIKE 'The Avengers%' AND g.genre IN ('comedy'::mmc.genre, 'action'::mmc.genre))
     OR (m.title = 'Captain America' AND g.genre IN ('action'::mmc.genre, 'drama'::mmc.genre))
     OR (m.title = 'Thor' AND g.genre = 'action'::mmc.genre);
-
-CREATE TABLE IF NOT EXISTS mmc.user (
-  id SERIAL NOT NULL PRIMARY KEY,
-  email TEXT NOT NULL UNIQUE,
-  first_name TEXT NULL,
-  last_name TEXT NULL,
-  password TEXT NULL
-);
-
-DELETE FROM mmc.user;
-INSERT INTO mmc.user (email, first_name, last_name, password) VALUES
-('matt.d.burr@gmail.com', 'Matt', 'Burr', 'nothing'),
-('mdburr@outlook.com', 'Matthew', 'Burr', 'also_nothing');
-
-CREATE TABLE IF NOT EXISTS mmc.user_movie (
-  movie_id INT NOT NULL REFERENCES mmc.movie (id) ON DELETE CASCADE,
-  user_id INT NOT NULL REFERENCES mmc.user (id),
-  PRIMARY KEY (movie_id, user_id)
-);
-
-DELETE FROM mmc.user_movie;
-INSERT INTO mmc.user_movie
-SELECT 
-    m.id AS movie_id
-  , u.id AS user_id
-  FROM mmc.movie AS m
- CROSS JOIN mmc.user AS u
- WHERE (u.email = 'matt.d.burr@gmail.com' AND m.title IN ('Captain America', 'The Avengers'))
-    OR (u.email = 'mdburr@outlook.com' AND m.title IN ('The Avengers', 'Thor'));
- 

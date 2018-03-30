@@ -1,27 +1,27 @@
 // movie.js
 // Model for the Movies endpoint
-import * as db from './db';
-import { QUERY_STRINGS } from './query_strings';
+import { Model } from './model';
+import { QUERIES } from './queries';
 
-export class Movies {
+export class Movies extends Model {
   async getMovies() {
-    return await db.execQuery(QUERY_STRINGS.SELECT_ALL_MOVIES);
+    return await this.execQuery(QUERIES.SELECT_ALL_MOVIES);
   }
 
   async getMovieById(movieID) {
-    return await db.execQuery(QUERY_STRINGS.SELECT_ONE_MOVIE, [movieID]);
+    return await this.execQuery(QUERIES.SELECT_ONE_MOVIE, [movieID]);
   }
 
   async getMovieGenres(movieID) {
-    return await db.execQuery(QUERY_STRINGS.SELECT_MOVIE_GENRE, [movieID]);
+    return await this.execQuery(QUERIES.SELECT_MOVIE_GENRE, [movieID]);
   }
 
   async getMovieTalent(movieID) {
-    return await db.execQuery(QUERY_STRINGS.SELECT_MOVIE_TALENT, [movieID]);
+    return await this.execQuery(QUERIES.SELECT_MOVIE_TALENT, [movieID]);
   }
 
   async postMovie(movie) {
-    return await db.execQuery(QUERY_STRINGS.INSERT_MOVIE, [
+    return await this.execQuery(QUERIES.INSERT_MOVIE, [
       movie.title,
       movie.release_year || null,
       movie.rating || null,
@@ -30,7 +30,7 @@ export class Movies {
   }
 
   async putMovie(movieID, movie) {
-    return await db.execQuery(QUERY_STRINGS.UPDATE_MOVIE, [
+    return await this.execQuery(QUERIES.UPDATE_MOVIE, [
       movieID,
       movie.title,
       movie.release_year || null,
@@ -40,32 +40,29 @@ export class Movies {
   }
 
   async deleteMovie(movieID) {
-    return await db.execQuery(QUERY_STRINGS.DELETE_MOVIE, [movieID]);
+    return await this.execQuery(QUERIES.DELETE_MOVIE, [movieID]);
   }
 
   async addTalentToMovie(movieID, talentID) {
-    return await db.execQuery(QUERY_STRINGS.ADD_TALENT_TO_MOVIE, [
+    return await this.execQuery(QUERIES.ADD_TALENT_TO_MOVIE, [
       movieID,
       talentID,
     ]);
   }
 
   async deleteTalentFromMovie(movieID, talentID) {
-    return await db.execQuery(QUERY_STRINGS.DELETE_TALENT_FROM_MOVIE, [
+    return await this.execQuery(QUERIES.DELETE_TALENT_FROM_MOVIE, [
       movieID,
       talentID,
     ]);
   }
 
   async addGenreToMovie(movieID, genre) {
-    return await db.execQuery(QUERY_STRINGS.ADD_GENRE_TO_MOVIE, [
-      movieID,
-      genre,
-    ]);
+    return await this.execQuery(QUERIES.ADD_GENRE_TO_MOVIE, [movieID, genre]);
   }
 
   async deleteGenreFromMovie(movieID, genre) {
-    return await db.execQuery(QUERY_STRINGS.DELETE_GENRE_FROM_MOVIE, [
+    return await this.execQuery(QUERIES.DELETE_GENRE_FROM_MOVIE, [
       movieID,
       genre,
     ]);

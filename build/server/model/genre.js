@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Genre = undefined;
 exports.getGenres = getGenres;
 exports.getGenreMovies = getGenreMovies;
 
@@ -16,10 +17,21 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 // genre.js
 // Model for the Genre endpoint
+class Genre {
+  async getGenres() {
+    return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_ALL_GENRES);
+  }
+
+  async getGenreMovies(genre) {
+    return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_GENRE_MOVIES, [genre]);
+  }
+}
+
+exports.Genre = Genre;
 async function getGenres() {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_ALL_GENRES);
+  return await new Genre().getGenres();
 }
 
 async function getGenreMovies(genre) {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_GENRE_MOVIES, [genre]);
+  return await new Genre().getGenreMovies(genre);
 }

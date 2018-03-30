@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Talent = undefined;
 exports.getTalent = getTalent;
 exports.getTalentById = getTalentById;
 exports.getTalentMovies = getTalentMovies;
@@ -18,26 +19,49 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 // Talent.js
 // Defines the Talent class/endpoint
-async function execQuery(query, params) {
-  return await execQuery(query, params);
+class Talent {
+  async execQuery(query, params) {
+    return await execQuery(query, params);
+  }
+
+  // Returns all talent
+  async getTalent() {
+    return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_ALL_TALENT);
+  }
+
+  // Returns a single talent by matching their id
+  async getTalentById(id) {
+    return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_ONE_TALENT, [id]);
+  }
+
+  // Returns all of the movies associated with a talent
+  async getTalentMovies(id) {
+    return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_TALENT_MOVIES, [id]);
+  }
+
+  // Adds a new Talent
+  async postTalent(talent) {
+    return await db.execQuery(_query_strings.QUERY_STRINGS.INSERT_TALENT, [talent.first_name, talent.last_name]);
+  }
 }
 
-// Returns all talent
+exports.Talent = Talent; // Returns all talent
+
 async function getTalent() {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_ALL_TALENT);
+  return await new Talent().getTalent();
 }
 
 // Returns a single talent by matching their id
 async function getTalentById(id) {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_ONE_TALENT, [id]);
+  return await new Talent().getTalentById(id);
 }
 
 // Returns all of the movies associated with a talent
 async function getTalentMovies(id) {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.SELECT_TALENT_MOVIES, [id]);
+  return await new Talent().getTalentMovies(id);
 }
 
 // Adds a new Talent
 async function postTalent(talent) {
-  return await db.execQuery(_query_strings.QUERY_STRINGS.INSERT_TALENT, [talent.first_name, talent.last_name]);
+  return await new Talent().postTalent(talent);
 }
