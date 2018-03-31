@@ -5,8 +5,23 @@ import AddMovie from './addmovie';
 import EditMovie from './editmovie';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import thunkMiddleware from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
+import { fetchAllMovies } from './actions';
+import appReducer from './reducers';
+import { Provider } from 'react-redux';
 
+const DATA_MODEL = {
+  user: {
+    id: 1,
+    email: 'matt.d.burr@gmail.com',
+    first_name: 'Matthew',
+    last_name: 'Burr',
+  },
+  genres: [{ genre: 'Action' }, { genre: 'Comedy' }, { genre: 'Drama' }],
+};
 const AddMovieWithHistory = withRouter(AddMovie);
+const store = createStore(appReducer, applyMiddleware(thunkMiddleware));
 
 class App extends React.Component {
   constructor(props) {
@@ -19,14 +34,15 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/movies')
+    /*fetch('/movies')
       .then(results => {
         return results.json();
       })
       .then(movies => {
         this.setState({ movies: movies });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err));*/
+    store.dispatch(fetchAllMovies());
   }
 
   handleAddMovie(movie) {
@@ -129,8 +145,10 @@ class App extends React.Component {
 
 const RoutedApp = withRouter(App);
 render(
-  <Router>
-    <RoutedApp />
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <RoutedApp />
+    </Router>
+  </Provider>,
   document.getElementById('app')
 );

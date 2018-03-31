@@ -2,6 +2,7 @@ import React from 'react';
 import { Movie } from './movie';
 import { Link } from 'react-router-dom';
 import { StyledLink, Layout } from './components';
+import { connect } from 'react-redux';
 
 const AddButton = StyledLink.extend`
   z-index: 500;
@@ -10,7 +11,9 @@ const AddButton = StyledLink.extend`
   right: 50px;
 `;
 
-export default class MovieCatalog extends React.Component {
+const mapStateToProps = state => ({ movies: state.movieCatalog.movies });
+
+class BaseMovieCatalog extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -27,3 +30,7 @@ export default class MovieCatalog extends React.Component {
     );
   }
 }
+
+const MovieCatalog = connect(mapStateToProps)(BaseMovieCatalog);
+
+export default MovieCatalog;
