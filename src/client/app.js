@@ -6,22 +6,12 @@ import EditMovie from './editmovie';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
-let DATA_MODEL = {
-  user: { id: 1, first_name: 'Matthew', last_name: 'Burr' },
-  movies: [
-    { id: 1, title: 'The Avengers', poster: 'images/noposter.jpg' },
-    { id: 2, title: 'Captain America', poster: 'images/noposter.jpg' },
-    { id: 3, title: 'Thor', poster: 'images/noposter.jpg' },
-  ],
-  genres: [{ genre: 'Action' }, { genre: 'Comedy' }, { genre: 'Drama' }],
-};
-
 const AddMovieWithHistory = withRouter(AddMovie);
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { movies: DATA_MODEL.movies };
+    this.state = { movies: [] };
     this.handleAddMovie = this.handleAddMovie.bind(this);
     this.handleEditMovie = this.handleEditMovie.bind(this);
     this.handleDeleteMovie = this.handleDeleteMovie.bind(this);
