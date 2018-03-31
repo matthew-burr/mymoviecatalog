@@ -38,8 +38,26 @@ export function selectMovie(movie) {
 }
 
 export const ADD_MOVIE = 'ADD_MOVIE';
-export const ADD_MOVIE_SUCESS = 'ADD_MOVIE_SUCESS';
+export const ADD_MOVIE_SUCCESS = 'ADD_MOVIE_SUCESS';
 export const ADD_MOVIE_FAILURE = 'ADD_MOVIE_FAILURE';
+export function postNewMovie(movie) {
+  return function(dispatch) {
+    dispatch(addMovie(movie));
+    fetch('/movies', {
+      method: 'POST',
+      body: JSON.stringify(movie),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        dispatch(addMovieSuccess(data[0]));
+      });
+  };
+}
 export function addMovie(movie) {
   return {
     type: ADD_MOVIE,
@@ -63,6 +81,24 @@ export function addMovieFailure(status, error) {
 export const UPDATE_MOVIE = 'UPDATE_MOVIE';
 export const UPDATE_MOVIE_SUCCESS = 'UPDATE_MOVIE_SUCCESS';
 export const UPDATE_MOVIE_FAILURE = 'UPDATE_MOVIE_FAILURE';
+export function putUpdateMovie(movie) {
+  return function(dispatch) {
+    dispatch(updateMovie(movie.id, movie));
+    return fetch(`/movies/${movie.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(movie),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        dispatch(updateMovieSuccess(data[0]));
+      });
+  };
+}
 export function updateMovie(movieID, movie) {
   return {
     type: UPDATE_MOVIE,
@@ -87,6 +123,21 @@ export function updateMovieFailure(status, error) {
 export const DELETE_MOVIE = 'DELETE_MOVIE';
 export const DELETE_MOVIE_SUCCESS = 'DELETE_MOVIE_SUCCESS';
 export const DELETE_MOVIE_FAILURE = 'DELETE_MOVIE_FAILURE';
+export function sendDeleteMovie(movie) {
+  return function(dispatch) {
+    dispatch(deleteMovie(movie.id));
+    fetch(`/movies/${movie.id}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    }).then(response => {
+      if (response.ok) {
+        dispatch(deleteMovieSuccess(movie.id));
+      }
+    });
+  };
+}
 export function deleteMovie(movieID) {
   return {
     type: DELETE_MOVIE,

@@ -8,7 +8,7 @@ import {
   DELETE_MOVIE_SUCCESS,
   ADD_MOVIE,
   ADD_MOVIE_FAILURE,
-  ADD_MOVIE_SUCESS,
+  ADD_MOVIE_SUCCESS,
   UPDATE_MOVIE,
   UPDATE_MOVIE_FAILURE,
   UPDATE_MOVIE_SUCCESS,
@@ -57,7 +57,7 @@ function movieCatalog(
         isFetching: true,
         isInvalid: true,
       });
-    case ADD_MOVIE_SUCESS:
+    case ADD_MOVIE_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         isInvalid: false,
@@ -74,15 +74,16 @@ function movieCatalog(
         isInvalid: true,
       });
     case DELETE_MOVIE_SUCCESS:
-      let newMovies = state.movies;
-      let deletedMovieIndex = newMovies.findIndex(
+      let deletedMovieIndex = state.movies.findIndex(
         movie => movie.id === action.movieID
       );
-      newMovies.splice(deletedMovieIndex, 1);
       return Object.assign({}, state, {
         isFetching: false,
         isInvalid: false,
-        movies: newMovies,
+        movies: [
+          ...state.movies.slice(0, deletedMovieIndex),
+          ...state.movies.slice(deletedMovieIndex + 1),
+        ],
       });
     case DELETE_MOVIE_FAILURE:
       return Object.assign({}, state, {
@@ -119,6 +120,10 @@ function currentMovie(state = { movie: {} }, action) {
     case SELECT_MOVIE:
       return Object.assign({}, state, {
         movie: action.movie,
+      });
+    case DELETE_MOVIE_SUCCESS:
+      return Object.assign({}, state, {
+        movie: {},
       });
     default:
       return state;

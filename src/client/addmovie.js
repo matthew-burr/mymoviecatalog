@@ -10,6 +10,9 @@ import {
   Layout,
   Button,
 } from './components';
+import { connect } from 'react-redux';
+import { postNewMovie } from './store/actions';
+
 const BAD_IMAGE_SERVER = 'ia.media-imdb.com';
 const GOOD_IMAGE_SERVER = 'images-na.ssl-images-amazon.com';
 
@@ -45,6 +48,13 @@ const SearchResultItem = ({ movie, onClick }) => (
   </MiniMoviePanel>
 );
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onAdd: movie => {
+      dispatch(postNewMovie(movie));
+    },
+  };
+};
 const SearchResult = ({ movies, onResultClick }) => {
   if (movies && movies.length) {
     return (
@@ -59,13 +69,12 @@ const SearchResult = ({ movies, onResultClick }) => {
   return null;
 };
 
-export default class AddMovie extends React.Component {
+class BaseAddMovie extends React.Component {
   constructor(props) {
     super(props);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleResultClick = this.handleResultClick.bind(this);
-    this.handleAddMovie = this.handleAddMovie.bind(this);
     this.state = {
       title: '',
       release_year: '',
@@ -109,17 +118,6 @@ export default class AddMovie extends React.Component {
     });
   }
 
-  handleAddMovie(event) {
-    event.preventDefault();
-    if (this.state.title.trim === '') return;
-    let movie = {
-      title: this.state.title,
-      release_year: this.state.release_year,
-      poster: this.state.poster || 'images/noposter.jpg',
-    };
-    this.props.handleAddMovie(movie);
-  }
-
   render() {
     return (
       <Overlay height="80%" top="10%" width="80%" left="10%">
@@ -130,7 +128,7 @@ export default class AddMovie extends React.Component {
           <h1>Add a New Movie</h1>
           <Layout>
             <ConstrainedLayout vertical>
-              <form onSubmit={this.handleAddMovie}>
+              <form>
                 <LabeledInput
                   id="movieTitle"
                   label="Title"
@@ -174,7 +172,18 @@ export default class AddMovie extends React.Component {
                     this.handleFieldChange({ poster: event.target.value })
                   }
                 />
-                <Button type="submit">Add</Button>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    this.props.onAdd({
+                      title: this.state.title,
+                      release_year: this.state.release_year,
+                      poster: this.state.poster || 'images/noposter.jpg',
+                    });
+                  }}
+                >
+                  Add
+                </Button>
               </form>
             </ConstrainedLayout>
             <SearchResult
@@ -187,3 +196,7 @@ export default class AddMovie extends React.Component {
     );
   }
 }
+
+const AddMovie = connect(null, mapDispatchToProps)(BaseAddMovie);
+
+export default AddMovie;

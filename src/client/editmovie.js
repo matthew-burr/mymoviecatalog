@@ -10,6 +10,9 @@ import {
   Layout,
   Button,
 } from './components';
+import { connect } from 'react-redux';
+import { putUpdateMovie, sendDeleteMovie } from './store/actions';
+import { Link } from 'react-router-dom';
 
 const MiniMoviePoster = styled.img`
   width: 100%;
@@ -29,13 +32,23 @@ const CloseButton = StyledLink.extend`
   right: 15px;
 `;
 
-export default class EditMovie extends React.Component {
+const mapStateToProps = state => ({ movie: state.currentMovie.movie });
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmit: movie => {
+      dispatch(putUpdateMovie(movie));
+    },
+    onDelete: movie => {
+      dispatch(sendDeleteMovie(movie));
+    },
+  };
+};
+
+class BaseEditMovie extends React.Component {
   constructor(props) {
     super(props);
     let { movie } = this.props;
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleEditMovie = this.handleEditMovie.bind(this);
-    this.handleDeleteMovie = this.handleDeleteMovie.bind(this);
     this.state = {
       id: movie.id || 0,
       title: movie.title || '',
@@ -49,25 +62,6 @@ export default class EditMovie extends React.Component {
     this.setState(newState);
   }
 
-  handleEditMovie(event) {
-    event.preventDefault();
-    let movie = {
-      id: this.state.id,
-      title: this.state.title,
-      release_year: this.state.release_year,
-      rating: this.state.rating,
-      poster: this.state.poster || 'images/noposter.jpg',
-    };
-    this.props.handleEditMovie(movie);
-  }
-
-  handleDeleteMovie(event) {
-    let movie = {
-      id: this.state.id,
-    };
-    this.props.onDeleteMovie(movie);
-  }
-
   render() {
     return (
       <Overlay height="80%" top="10%" width="80%" left="10%">
@@ -78,7 +72,7 @@ export default class EditMovie extends React.Component {
           <h1>Edit Your Movie</h1>
           <Layout>
             <Layout vertical>
-              <form onSubmit={this.handleEditMovie}>
+              <form>
                 <LabeledInput
                   id="movieTitle"
                   label="Title"
@@ -119,10 +113,30 @@ export default class EditMovie extends React.Component {
                     this.handleFieldChange({ poster: event.target.value })
                   }
                 />
-                <Button type="submit">Save Changes</Button>
-                <Button type="button" onClick={this.handleDeleteMovie}>
+                <Link
+                  to="/"
+                  onClick={() => {
+                    this.props.onSubmit({
+                      id: this.state.id,
+                      title: this.state.title,
+                      release_year: this.state.release_year,
+                      rating: this.state.rating,
+                      poster: this.state.poster || 'images/noposter.jpg',
+                    });
+                  }}
+                >
+                  Save Changes
+                </Link>
+                <Link
+                  to="/"
+                  onClick={() => {
+                    this.props.onDelete({
+                      id: this.state.id,
+                    });
+                  }}
+                >
                   Delete Movie
-                </Button>
+                </Link>
               </form>
             </Layout>
           </Layout>
@@ -131,3 +145,6 @@ export default class EditMovie extends React.Component {
     );
   }
 }
+
+const EditMovie = connect(mapStateToProps, mapDispatchToProps)(BaseEditMovie);
+export default EditMovie;

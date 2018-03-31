@@ -5,7 +5,7 @@ import MovieCatalog from './moviecatalog';
 
 export default class Home extends React.Component {
   render() {
-    let { data, movies } = this.props;
+    let { data } = this.props;
     return (
       <div>
         <div className="row">
@@ -16,7 +16,7 @@ export default class Home extends React.Component {
             <SideBar genres={data.genres} />
           </div>
           <div className="col-sm-10">
-            <MovieCatalog movies={movies} />
+            <MovieCatalog />
           </div>
         </div>
       </div>
