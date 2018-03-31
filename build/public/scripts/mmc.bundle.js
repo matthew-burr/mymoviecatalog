@@ -1503,15 +1503,39 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 
 /***/ }),
 
-/***/ "./src/client/header.js":
-/*!******************************!*\
-  !*** ./src/client/header.js ***!
-  \******************************/
+/***/ "./src/client/header/header.js":
+/*!*************************************!*\
+  !*** ./src/client/header/header.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _userinfo = __webpack_require__(/*! ./userinfo */ \"./src/client/userinfo.js\");\n\nvar _userinfo2 = _interopRequireDefault(_userinfo);\n\nvar _search = __webpack_require__(/*! ./search */ \"./src/client/search.js\");\n\nvar _search2 = _interopRequireDefault(_search);\n\nvar _styledComponents = __webpack_require__(/*! styled-components */ \"./node_modules/styled-components/dist/styled-components.browser.es.js\");\n\nvar _styledComponents2 = _interopRequireDefault(_styledComponents);\n\nvar _components = __webpack_require__(/*! ./components */ \"./src/client/components.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconst HeaderContainer = _components.ShadowPanel.extend`\n  display: flex;\n  width: 100%;\n  background-color: rgb(200, 0, 0);\n  padding-left: 20px;\n  margin-bottom: 20px;\n`;\n\nconst Title = _styledComponents2.default.h1`\n  color: white;\n  font-size: 36pt;\n`;\n\nconst SiteTitle = ({ children }) => _react2.default.createElement(\n  'div',\n  { className: 'col-sm-10' },\n  _react2.default.createElement(\n    Title,\n    null,\n    children\n  )\n);\n\nconst ControlPanel = ({ user }) => _react2.default.createElement(\n  'div',\n  { className: 'col-sm-2' },\n  _react2.default.createElement(\n    'div',\n    { className: 'row' },\n    _react2.default.createElement(_userinfo2.default, { user: user })\n  ),\n  _react2.default.createElement(\n    'div',\n    { className: 'row' },\n    _react2.default.createElement(_search2.default, null)\n  )\n);\n\nclass Header extends _react2.default.Component {\n  render() {\n    let { user } = this.props;\n    return _react2.default.createElement(\n      HeaderContainer,\n      null,\n      _react2.default.createElement(\n        SiteTitle,\n        null,\n        'My Movie Catalog'\n      ),\n      _react2.default.createElement(ControlPanel, { user: user })\n    );\n  }\n}\nexports.default = Header;\n\n//# sourceURL=webpack:///./src/client/header.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _userinfo = __webpack_require__(/*! ./userinfo */ \"./src/client/header/userinfo.js\");\n\nvar _userinfo2 = _interopRequireDefault(_userinfo);\n\nvar _search = __webpack_require__(/*! ./search */ \"./src/client/header/search.js\");\n\nvar _search2 = _interopRequireDefault(_search);\n\nvar _styledComponents = __webpack_require__(/*! styled-components */ \"./node_modules/styled-components/dist/styled-components.browser.es.js\");\n\nvar _styledComponents2 = _interopRequireDefault(_styledComponents);\n\nvar _components = __webpack_require__(/*! ../components */ \"./src/client/components.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconst HeaderContainer = _components.ShadowPanel.extend`\n  display: flex;\n  width: 100%;\n  background-color: rgb(200, 0, 0);\n  padding-left: 20px;\n  margin-bottom: 20px;\n`;\n\nconst Title = _styledComponents2.default.h1`\n  color: white;\n  font-size: 36pt;\n`;\n\nconst SiteTitle = ({ children }) => _react2.default.createElement(\n  'div',\n  { className: 'col-sm-10' },\n  _react2.default.createElement(\n    Title,\n    null,\n    children\n  )\n);\n\nconst ControlPanel = ({ user }) => _react2.default.createElement(\n  'div',\n  { className: 'col-sm-2' },\n  _react2.default.createElement(\n    'div',\n    { className: 'row' },\n    _react2.default.createElement(_userinfo2.default, { user: user })\n  ),\n  _react2.default.createElement(\n    'div',\n    { className: 'row' },\n    _react2.default.createElement(_search2.default, null)\n  )\n);\n\nclass Header extends _react2.default.Component {\n  render() {\n    let { user } = this.props;\n    return _react2.default.createElement(\n      HeaderContainer,\n      null,\n      _react2.default.createElement(\n        SiteTitle,\n        null,\n        'My Movie Catalog'\n      ),\n      _react2.default.createElement(ControlPanel, { user: user })\n    );\n  }\n}\nexports.default = Header;\n\n//# sourceURL=webpack:///./src/client/header/header.js?");
+
+/***/ }),
+
+/***/ "./src/client/header/search.js":
+/*!*************************************!*\
+  !*** ./src/client/header/search.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _styledComponents = __webpack_require__(/*! styled-components */ \"./node_modules/styled-components/dist/styled-components.browser.es.js\");\n\nvar _styledComponents2 = _interopRequireDefault(_styledComponents);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Search extends _react2.default.Component {\n  render() {\n    return _react2.default.createElement(\n      'form',\n      null,\n      _react2.default.createElement('input', { type: 'text', placeholder: 'Enter a search term' }),\n      _react2.default.createElement(\n        'button',\n        { type: 'button' },\n        'Search'\n      )\n    );\n  }\n}\nexports.default = Search;\n\n//# sourceURL=webpack:///./src/client/header/search.js?");
+
+/***/ }),
+
+/***/ "./src/client/header/userinfo.js":
+/*!***************************************!*\
+  !*** ./src/client/header/userinfo.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass UserInfo extends _react2.default.Component {\n  render() {\n    let { user } = this.props;\n    return _react2.default.createElement(\n      'p',\n      null,\n      'Hello, ',\n      user.first_name,\n      '!!'\n    );\n  }\n}\nexports.default = UserInfo;\n\n//# sourceURL=webpack:///./src/client/header/userinfo.js?");
 
 /***/ }),
 
@@ -1523,19 +1547,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _header = __webpack_require__(/*! ./header */ \"./src/client/header.js\");\n\nvar _header2 = _interopRequireDefault(_header);\n\nvar _sidebar = __webpack_require__(/*! ./sidebar/sidebar */ \"./src/client/sidebar/sidebar.js\");\n\nvar _sidebar2 = _interopRequireDefault(_sidebar);\n\nvar _moviecatalog = __webpack_require__(/*! ./catalog/moviecatalog */ \"./src/client/catalog/moviecatalog.js\");\n\nvar _moviecatalog2 = _interopRequireDefault(_moviecatalog);\n\nvar _reactRouterDom = __webpack_require__(/*! react-router-dom */ \"./node_modules/react-router-dom/es/index.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Home extends _react2.default.Component {\n  render() {\n    let { data } = this.props;\n    return _react2.default.createElement(\n      'div',\n      null,\n      _react2.default.createElement(\n        'div',\n        { className: 'row' },\n        _react2.default.createElement(_header2.default, { user: data.user })\n      ),\n      _react2.default.createElement(\n        'div',\n        { className: 'row' },\n        _react2.default.createElement(\n          'div',\n          { className: 'col-sm-2' },\n          _react2.default.createElement(_sidebar2.default, { genres: data.genres })\n        ),\n        _react2.default.createElement(\n          'div',\n          { className: 'col-sm-10' },\n          _react2.default.createElement(_moviecatalog2.default, null)\n        )\n      )\n    );\n  }\n}\nexports.default = Home;\n\n//# sourceURL=webpack:///./src/client/home.js?");
-
-/***/ }),
-
-/***/ "./src/client/search.js":
-/*!******************************!*\
-  !*** ./src/client/search.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _styledComponents = __webpack_require__(/*! styled-components */ \"./node_modules/styled-components/dist/styled-components.browser.es.js\");\n\nvar _styledComponents2 = _interopRequireDefault(_styledComponents);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Search extends _react2.default.Component {\n  render() {\n    return _react2.default.createElement(\n      'form',\n      null,\n      _react2.default.createElement('input', { type: 'text', placeholder: 'Enter a search term' }),\n      _react2.default.createElement(\n        'button',\n        { type: 'button' },\n        'Search'\n      )\n    );\n  }\n}\nexports.default = Search;\n\n//# sourceURL=webpack:///./src/client/search.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _header = __webpack_require__(/*! ./header/header */ \"./src/client/header/header.js\");\n\nvar _header2 = _interopRequireDefault(_header);\n\nvar _sidebar = __webpack_require__(/*! ./sidebar/sidebar */ \"./src/client/sidebar/sidebar.js\");\n\nvar _sidebar2 = _interopRequireDefault(_sidebar);\n\nvar _moviecatalog = __webpack_require__(/*! ./catalog/moviecatalog */ \"./src/client/catalog/moviecatalog.js\");\n\nvar _moviecatalog2 = _interopRequireDefault(_moviecatalog);\n\nvar _reactRouterDom = __webpack_require__(/*! react-router-dom */ \"./node_modules/react-router-dom/es/index.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Home extends _react2.default.Component {\n  render() {\n    let { data } = this.props;\n    return _react2.default.createElement(\n      'div',\n      null,\n      _react2.default.createElement(\n        'div',\n        { className: 'row' },\n        _react2.default.createElement(_header2.default, { user: data.user })\n      ),\n      _react2.default.createElement(\n        'div',\n        { className: 'row' },\n        _react2.default.createElement(\n          'div',\n          { className: 'col-sm-2' },\n          _react2.default.createElement(_sidebar2.default, { genres: data.genres })\n        ),\n        _react2.default.createElement(\n          'div',\n          { className: 'col-sm-10' },\n          _react2.default.createElement(_moviecatalog2.default, null)\n        )\n      )\n    );\n  }\n}\nexports.default = Home;\n\n//# sourceURL=webpack:///./src/client/home.js?");
 
 /***/ }),
 
@@ -1596,18 +1608,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 
 "use strict";
 eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _actions = __webpack_require__(/*! ./actions */ \"./src/client/store/actions.js\");\n\nvar _redux = __webpack_require__(/*! redux */ \"./node_modules/redux/es/index.js\");\n\n// Redux Reducers for My Movie Catalog\nconst initialState = {\n  movieCatalog: {\n    movies: [],\n    isFetching: false,\n    isInvalid: false\n  },\n  currentMovie: {\n    movie: {}\n  }\n};\n\nconst myMovieCatalog = (0, _redux.combineReducers)({\n  movieCatalog,\n  currentMovie\n});\n\nexports.default = myMovieCatalog;\n\n\nfunction movieCatalog(state = { isFetching: false, isInvalid: false, movies: [] }, action) {\n  switch (action.type) {\n    case _actions.GET_MOVIES:\n      return Object.assign({}, state, {\n        isFetching: true\n      });\n    case _actions.GET_MOVIES_SUCCESS:\n      return Object.assign({}, state, {\n        isFetching: false,\n        movies: action.movies\n      });\n    case _actions.GET_MOVIES_FAILURE:\n      return Object.assign({}, state, {\n        isFetching: false\n      });\n    case _actions.ADD_MOVIE:\n      return Object.assign({}, state, {\n        isFetching: true,\n        isInvalid: true\n      });\n    case _actions.ADD_MOVIE_SUCCESS:\n      return Object.assign({}, state, {\n        isFetching: false,\n        isInvalid: false,\n        movies: [...state.movies, action.movie]\n      });\n    case _actions.ADD_MOVIE_FAILURE:\n      return Object.assign({}, state, {\n        isFetching: false,\n        isInvalid: false\n      });\n    case _actions.DELETE_MOVIE:\n      return Object.assign({}, state, {\n        isFetching: true,\n        isInvalid: true\n      });\n    case _actions.DELETE_MOVIE_SUCCESS:\n      let deletedMovieIndex = state.movies.findIndex(movie => movie.id === action.movieID);\n      return Object.assign({}, state, {\n        isFetching: false,\n        isInvalid: false,\n        movies: [...state.movies.slice(0, deletedMovieIndex), ...state.movies.slice(deletedMovieIndex + 1)]\n      });\n    case _actions.DELETE_MOVIE_FAILURE:\n      return Object.assign({}, state, {\n        isFetching: false,\n        isInvalid: false\n      });\n    case _actions.UPDATE_MOVIE:\n      return Object.assign({}, state, {\n        isFetching: true,\n        isInvalid: true\n      });\n    case _actions.UPDATE_MOVIE_SUCCESS:\n      return Object.assign({}, state, {\n        isFetching: false,\n        isInvalid: false,\n        movies: state.movies.map(movie => {\n          if (movie.id === action.movie.id) return action.movie;\n          return movie;\n        })\n      });\n    case _actions.UPDATE_MOVIE_FAILURE:\n      return Object.assign({}, state, {\n        isFetching: false,\n        isInvalid: false\n      });\n\n    default:\n      return state;\n  }\n}\n\nfunction currentMovie(state = { movie: {} }, action) {\n  switch (action.type) {\n    case _actions.SELECT_MOVIE:\n      return Object.assign({}, state, {\n        movie: action.movie\n      });\n    case _actions.DELETE_MOVIE_SUCCESS:\n      return Object.assign({}, state, {\n        movie: {}\n      });\n    default:\n      return state;\n  }\n}\n\n//# sourceURL=webpack:///./src/client/store/reducers.js?");
-
-/***/ }),
-
-/***/ "./src/client/userinfo.js":
-/*!********************************!*\
-  !*** ./src/client/userinfo.js ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass UserInfo extends _react2.default.Component {\n  render() {\n    let { user } = this.props;\n    return _react2.default.createElement(\n      'p',\n      null,\n      'Hello, ',\n      user.first_name,\n      '!!'\n    );\n  }\n}\nexports.default = UserInfo;\n\n//# sourceURL=webpack:///./src/client/userinfo.js?");
 
 /***/ })
 

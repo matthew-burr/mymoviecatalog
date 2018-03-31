@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './header';
+import Header from './header/header';
 import SideBar from './sidebar/sidebar';
 import MovieCatalog from './catalog/moviecatalog';
 import { Route } from 'react-router-dom';
