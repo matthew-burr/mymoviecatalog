@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from './header';
-import SideBar from './sidebar';
-import MovieCatalog from './moviecatalog';
+import SideBar from './sidebar/sidebar';
+import MovieCatalog from './catalog/moviecatalog';
+import { Route } from 'react-router-dom';
 
 export default class Home extends React.Component {
   render() {

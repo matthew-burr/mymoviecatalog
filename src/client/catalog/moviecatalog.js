@@ -1,8 +1,9 @@
 import React from 'react';
 import { Movie } from './movie';
-import { Link } from 'react-router-dom';
-import { StyledLink, Layout } from './components';
+import { Link, Route } from 'react-router-dom';
+import { StyledLink, Layout } from '../components';
 import { connect } from 'react-redux';
+import AddMovie from './addmovie';
 
 const AddButton = StyledLink.extend`
   z-index: 500;
@@ -21,12 +22,14 @@ class BaseMovieCatalog extends React.Component {
   render() {
     let { movies } = this.props;
     return (
-      <Layout wrapping>
-        {movies.map((movie, index) => <Movie key={index} movie={movie} />)}
-        <AddButton to="/addmovie" size="60px" color="rgb(200, 0, 0)">
-          <span className="fa fa-plus-circle" />
-        </AddButton>
-      </Layout>
+      <div>
+        <Layout wrapping>
+          {movies.map((movie, index) => <Movie key={index} movie={movie} />)}
+          <AddButton to="/addmovie" size="60px" color="rgb(200, 0, 0)">
+            <span className="fa fa-plus-circle" />
+          </AddButton>
+        </Layout>
+      </div>
     );
   }
 }

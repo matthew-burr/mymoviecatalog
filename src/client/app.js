@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import Home from './home';
-import AddMovie from './addmovie';
-import EditMovie from './editmovie';
+import AddMovie from './catalog/addmovie';
+import EditMovie from './catalog/editmovie';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import thunkMiddleware from 'redux-thunk';
@@ -20,7 +20,6 @@ const DATA_MODEL = {
   },
   genres: [{ genre: 'Action' }, { genre: 'Comedy' }, { genre: 'Drama' }],
 };
-const AddMovieWithHistory = withRouter(AddMovie);
 const store = createStore(appReducer, applyMiddleware(thunkMiddleware));
 
 class App extends React.Component {
@@ -37,7 +36,7 @@ class App extends React.Component {
     return (
       <div>
         <Route path="/" render={() => <Home data={DATA_MODEL} />} />
-        <Route path="/addmovie" render={() => <AddMovie />} />
+        <Route path="/addmovie" component={AddMovie} />
         <Route
           path="/editmovie"
           render={() => {

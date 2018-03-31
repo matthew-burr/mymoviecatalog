@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { ShadowPanel, Layout } from './components';
+import { ShadowPanel, Layout } from '../components';
 import { Link } from 'react-router-dom';
 
 // copies example from https://www.w3schools.com/css/css3_shadows.asp

@@ -9,10 +9,12 @@ import {
   StyledLink,
   Layout,
   Button,
-} from './components';
+} from '../components';
 import { connect } from 'react-redux';
-import { putUpdateMovie, sendDeleteMovie } from './store/actions';
-import { Link } from 'react-router-dom';
+import { postNewMovie } from '../store/actions';
+
+const BAD_IMAGE_SERVER = 'ia.media-imdb.com';
+const GOOD_IMAGE_SERVER = 'images-na.ssl-images-amazon.com';
 
 const MiniMoviePoster = styled.img`
   width: 100%;
@@ -32,34 +34,88 @@ const CloseButton = StyledLink.extend`
   right: 15px;
 `;
 
-const mapStateToProps = state => ({ movie: state.currentMovie.movie });
+const ConstrainedLayout = styled(Layout)`
+  min-width: 50%;
+  padding-left: 5px;
+`;
+
+const SearchResultItem = ({ movie, onClick }) => (
+  <MiniMoviePanel onClick={() => onClick(movie)}>
+    <MiniMoviePoster src={movie.poster} />
+    <p>
+      {movie.title} ({movie.release_year})
+    </p>
+  </MiniMoviePanel>
+);
+
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: movie => {
-      dispatch(putUpdateMovie(movie));
-    },
-    onDelete: movie => {
-      dispatch(sendDeleteMovie(movie));
+    onAdd: movie => {
+      dispatch(postNewMovie(movie));
     },
   };
 };
+const SearchResult = ({ movies, onResultClick }) => {
+  if (movies && movies.length) {
+    return (
+      <Layout scrollable wrapping>
+        {movies.map((movie, index) => (
+          <SearchResultItem movie={movie} key={index} onClick={onResultClick} />
+        ))}
+      </Layout>
+    );
+  }
 
-class BaseEditMovie extends React.Component {
+  return null;
+};
+
+class BaseAddMovie extends React.Component {
   constructor(props) {
     super(props);
-    let { movie } = this.props;
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleResultClick = this.handleResultClick.bind(this);
     this.state = {
-      id: movie.id || 0,
-      title: movie.title || '',
-      release_year: movie.release_year || '',
-      rating: movie.rating || '',
-      poster: movie.poster || '',
+      title: '',
+      release_year: '',
+      rating: '',
+      poster: '',
+      searchResults: [],
     };
   }
 
   handleFieldChange(newState) {
     this.setState(newState);
+  }
+
+  handleSearch() {
+    const term = this.state.title;
+    if (!term) return;
+
+    const API_BASE = 'https://www.omdbapi.com/?apikey=4ba5e3af';
+    fetch(API_BASE + `&s=${term}`)
+      .then(response => response.json())
+      .then(result => {
+        if (result.Response === 'True' && result.Search.length) {
+          console.log('Setting state');
+          this.setState({
+            searchResults: result.Search.map(item => ({
+              title: item.Title,
+              release_year: item.Year,
+              poster: item.Poster.replace(BAD_IMAGE_SERVER, GOOD_IMAGE_SERVER),
+            })),
+          });
+        } else console.log(result);
+      })
+      .catch(err => console.log(err));
+  }
+
+  handleResultClick(movie) {
+    this.setState({
+      title: movie.title,
+      release_year: movie.release_year,
+      poster: movie.poster,
+    });
   }
 
   render() {
@@ -69,9 +125,9 @@ class BaseEditMovie extends React.Component {
           <span className="fa fa-close" />
         </CloseButton>
         <Layout vertical>
-          <h1>Edit Your Movie</h1>
+          <h1>Add a New Movie</h1>
           <Layout>
-            <Layout vertical>
+            <ConstrainedLayout vertical>
               <form>
                 <LabeledInput
                   id="movieTitle"
@@ -83,6 +139,9 @@ class BaseEditMovie extends React.Component {
                     this.handleFieldChange({ title: event.target.value })
                   }
                 />
+                <Button type="button" onClick={this.handleSearch}>
+                  Search
+                </Button>
                 <LabeledInput
                   id="releaseYear"
                   label="Year"
@@ -113,32 +172,24 @@ class BaseEditMovie extends React.Component {
                     this.handleFieldChange({ poster: event.target.value })
                   }
                 />
-                <Link
-                  to="/"
+                <Button
+                  type="button"
                   onClick={() => {
-                    this.props.onSubmit({
-                      id: this.state.id,
+                    this.props.onAdd({
                       title: this.state.title,
                       release_year: this.state.release_year,
-                      rating: this.state.rating,
                       poster: this.state.poster || 'images/noposter.jpg',
                     });
                   }}
                 >
-                  Save Changes
-                </Link>
-                <Link
-                  to="/"
-                  onClick={() => {
-                    this.props.onDelete({
-                      id: this.state.id,
-                    });
-                  }}
-                >
-                  Delete Movie
-                </Link>
+                  Add
+                </Button>
               </form>
-            </Layout>
+            </ConstrainedLayout>
+            <SearchResult
+              movies={this.state.searchResults}
+              onResultClick={this.handleResultClick}
+            />
           </Layout>
         </Layout>
       </Overlay>
@@ -146,5 +197,6 @@ class BaseEditMovie extends React.Component {
   }
 }
 
-const EditMovie = connect(mapStateToProps, mapDispatchToProps)(BaseEditMovie);
-export default EditMovie;
+const AddMovie = connect(null, mapDispatchToProps)(BaseAddMovie);
+
+export default AddMovie;
