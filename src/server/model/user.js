@@ -2,6 +2,7 @@
 import * as db from './db';
 import { QUERY_STRINGS } from './query_strings';
 import PropTypes from 'prop-types';
+import pg from 'pg';
 
 export class User {
   async addUser(user) {

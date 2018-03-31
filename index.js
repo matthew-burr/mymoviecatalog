@@ -5,9 +5,11 @@ const genres = require('./build/server/model/genre.js');
 const movies = require('./build/server/model/movie');
 const mmcuser = require('./build/server/model/user.js');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const SECRET = 'n0b0dy-should-ever-no-this-secr3t';
+const SALT_ROUNDS = 10;
 
 app.use(express.static('build/public'));
 app.use(bodyParser.json());
@@ -29,12 +31,36 @@ app.post('/log_in', async (req, res) => {
 
   res.send({ success: false });
 });
-/*
-app.use((req, res, next) => {
-  if (verifyLogin(req)) return next();
-  res.status(401).send({ error: 'Not logged in' });
+// User endpoinst
+app.post('/user', (req, res) => {
+  let { email, first_name, last_name, password } = req.body;
+  bcrypt.hash(password, SALT_ROUNDS).then(hashedPassword => {
+    mmcuser
+      .addUser({
+        email: email,
+        first_name: first_name || '',
+        last_name: last_name || '',
+        password: hashedPassword,
+      })
+      .then(rows => {
+        let [account] = rows;
+        let token = jwt.sign({ id: account.id }, SECRET);
+        res.status(200).send({
+          user: {
+            email: email,
+            first_name: first_name,
+            last_name: last_name,
+          },
+          token: token,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).send({ status: 400, error: err });
+      });
+  });
 });
-*/
+
 // Talent endpoints
 app.get('/talent', (req, res) => {
   respondWith(res, talent.getTalent);

@@ -157,3 +157,43 @@ export function deleteMovieFailure(status, error) {
     error: error,
   };
 }
+
+export const CREATE_USER = 'CREATE_USER';
+export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
+export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
+export function postNewUser(user) {
+  return function(dispatch) {
+    dispatch(createUser(user));
+    fetch('/user', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        dispatch(createUserSuccess(data.token, data.user));
+      });
+  };
+}
+export function createUser(user) {
+  return {
+    type: CREATE_USER,
+    user: user,
+  };
+}
+export function createUserSuccess(token, user) {
+  return {
+    type: CREATE_USER_SUCCESS,
+    user: user,
+    token: token,
+  };
+}
+export function createUserFailure(status, error) {
+  return {
+    type: CREATE_USER_FAILURE,
+    status: status,
+    error: error,
+  };
+}

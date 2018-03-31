@@ -13,6 +13,7 @@ import {
   UPDATE_MOVIE_FAILURE,
   UPDATE_MOVIE_SUCCESS,
   SELECT_MOVIE,
+  CREATE_USER_SUCCESS,
 } from './actions';
 import { combineReducers } from 'redux';
 
@@ -30,6 +31,7 @@ const initialState = {
 const myMovieCatalog = combineReducers({
   movieCatalog,
   currentMovie,
+  user,
 });
 
 export default myMovieCatalog;
@@ -124,6 +126,23 @@ function currentMovie(state = { movie: {} }, action) {
     case DELETE_MOVIE_SUCCESS:
       return Object.assign({}, state, {
         movie: {},
+      });
+    default:
+      return state;
+  }
+}
+
+function user(
+  state = { email: '', first_name: '', last_name: '', token: '' },
+  action
+) {
+  switch (action.type) {
+    case CREATE_USER_SUCCESS:
+      return Object.assign({}, state, {
+        email: action.user.email,
+        first_name: action.user.first_name,
+        last_name: action.user.last_name,
+        token: action.token,
       });
     default:
       return state;

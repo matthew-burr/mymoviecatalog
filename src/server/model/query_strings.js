@@ -2,7 +2,7 @@ export const QUERY_STRINGS = {
   // User Queries
   ADD_USER: `
     INSERT INTO mmc.user (email, first_name, last_name, password) 
-    VALUES ($1, $2, $3, $5) RETURNING id`,
+    VALUES ($1, $2, $3, $4) RETURNING id`,
   GET_USER: `SELECT * FROM mmc.user WHERE email = $1`,
 
   // Genre Queries

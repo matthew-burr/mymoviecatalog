@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
 import Home from './home';
+import CreateUser from './security/createuser';
 import AddMovie from './catalog/addmovie';
 import EditMovie from './catalog/editmovie';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
@@ -35,7 +36,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Route path="/" render={() => <Home data={DATA_MODEL} />} />
+        <Switch>
+          <Route path="/createuser" component={CreateUser} />
+          <Route path="/" render={() => <Home data={DATA_MODEL} />} />
+        </Switch>
         <Route path="/addmovie" component={AddMovie} />
         <Route
           path="/editmovie"
