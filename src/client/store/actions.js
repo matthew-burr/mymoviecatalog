@@ -1,11 +1,23 @@
 // React Redux Actions for My Movie Catalog
+var headerFunc = () => {
+  return new Headers({
+    'Content-Type': 'application/json',
+  });
+};
+export const setHeaderFunction = func => {
+  headerFunc = func;
+};
+
 export const GET_MOVIES = 'GET_MOVIES';
 export const GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS';
 export const GET_MOVIES_FAILURE = 'GET_MOVIES_FAILURE';
 export function fetchAllMovies(dispatch) {
   return function(dispatch) {
     dispatch(getMovies());
-    return fetch('/movies')
+    return fetch('/movies', {
+      method: 'GET',
+      headers: headerFunc(),
+    })
       .then(res => res.json())
       .then(movies => dispatch(getMoviesSuccess(movies)));
   };
@@ -46,9 +58,7 @@ export function postNewMovie(movie) {
     fetch('/movies', {
       method: 'POST',
       body: JSON.stringify(movie),
-      headers: new Headers({
-        'content-type': 'application/json',
-      }),
+      headers: headerFunc(),
     })
       .then(response => {
         return response.json();
@@ -223,7 +233,6 @@ export function login() {
   };
 }
 export function loginSuccess(token, user) {
-  console.log(user);
   return {
     type: LOGIN_SUCCESS,
     user: user,

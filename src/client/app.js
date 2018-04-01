@@ -9,7 +9,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-import { fetchAllMovies, selectMovie } from './store/actions';
+import {
+  fetchAllMovies,
+  selectMovie,
+  setHeaderFunction,
+} from './store/actions';
 import appReducer from './store/reducers';
 import { Provider } from 'react-redux';
 
@@ -23,6 +27,18 @@ const DATA_MODEL = {
   genres: [{ genre: 'Action' }, { genre: 'Comedy' }, { genre: 'Drama' }],
 };
 const store = createStore(appReducer, applyMiddleware(thunkMiddleware));
+setHeaderFunction(() => {
+  let { user } = store.getState();
+  if (user.token) {
+    return new Headers({
+      'Content-Type': 'application/json',
+      Authentication: `Bearer ${user.token}`,
+    });
+  }
+  return new Headers({
+    'Content-Type': 'application/json',
+  });
+});
 
 class App extends React.Component {
   constructor(props) {
