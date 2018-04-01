@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const STANDARD_BOX_SHADOW =
+export const STANDARD_BOX_SHADOW =
   '0 4px 8px 0 rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.24)';
 
 const STANDARD_TEXT_SHADOW = '2px 2px 4px #000000';
@@ -55,14 +55,30 @@ export const Input = styled.input`
   padding-left: 0.5em;
 `;
 
-export const Button = styled.button`
+export const Button = styled.input.attrs({
+  type: 'button',
+})`
   border: 1px solid ${props => (props.borderColor ? props.borderColor : 'gray')};
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-  height: 2.5em;
+  margin: 10px 10px 10px 0;
   border-radius: 5px;
   background-color: ${STANDARD_RED};
   color: white;
+  font-size: 1em;
+  padding: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const ButtonLink = styled(Link)`
+  border: 1px solid ${props => (props.borderColor ? props.borderColor : 'gray')};
+  display: inline-block;
+  margin: 10px 10px 10px 0;
+  border-radius: 5px;
+  background-color: ${STANDARD_RED};
+  color: white;
+  text-decoration: none;
+  padding: 5px;
 `;
 
 export const LabeledInput = props => (

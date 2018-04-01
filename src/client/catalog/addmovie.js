@@ -139,9 +139,7 @@ class BaseAddMovie extends React.Component {
                     this.handleFieldChange({ title: event.target.value })
                   }
                 />
-                <Button type="button" onClick={this.handleSearch}>
-                  Search
-                </Button>
+                <Button value="Search" onClick={this.handleSearch} />
                 <LabeledInput
                   id="releaseYear"
                   label="Year"
@@ -173,7 +171,6 @@ class BaseAddMovie extends React.Component {
                   }
                 />
                 <Button
-                  type="button"
                   onClick={() => {
                     this.props.onAdd({
                       title: this.state.title,
@@ -181,9 +178,8 @@ class BaseAddMovie extends React.Component {
                       poster: this.state.poster || 'images/noposter.jpg',
                     });
                   }}
-                >
-                  Add
-                </Button>
+                  value="Add"
+                />
               </form>
             </ConstrainedLayout>
             <SearchResult

@@ -9,6 +9,7 @@ import {
   StyledLink,
   Layout,
   Button,
+  ButtonLink,
 } from '../components';
 import { connect } from 'react-redux';
 import { putUpdateMovie, sendDeleteMovie } from '../store/actions';
@@ -113,7 +114,7 @@ class BaseEditMovie extends React.Component {
                     this.handleFieldChange({ poster: event.target.value })
                   }
                 />
-                <Link
+                <ButtonLink
                   to="/"
                   onClick={() => {
                     this.props.onSubmit({
@@ -126,8 +127,8 @@ class BaseEditMovie extends React.Component {
                   }}
                 >
                   Save Changes
-                </Link>
-                <Link
+                </ButtonLink>
+                <ButtonLink
                   to="/"
                   onClick={() => {
                     this.props.onDelete({
@@ -136,7 +137,7 @@ class BaseEditMovie extends React.Component {
                   }}
                 >
                   Delete Movie
-                </Link>
+                </ButtonLink>
               </form>
             </Layout>
           </Layout>
