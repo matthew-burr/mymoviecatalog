@@ -28,7 +28,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 // Functionality for managing users in the database
 class User {
   async addUser(user) {
-    console.log(user);
     return await db.execQuery(_query_strings.QUERY_STRINGS.ADD_USER, [user.email, user.first_name || '', user.last_name || '', user.password]);
   }
 

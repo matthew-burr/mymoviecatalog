@@ -17,19 +17,28 @@ app.use('/testing', express.static('testing'));
 
 // User endpoints
 app.post('/log_in', async (req, res) => {
-  verifyLogin(req);
   let { username, password } = req.body;
 
   if (username && password) {
     let [account] = await mmcuser.getUser(username);
-    if (password === account.password) {
-      let token = jwt.sign({ id: account.id }, SECRET);
-      res.send({ success: true, token: token });
-      return;
-    }
+    bcrypt.compare(password, account.password).then(passed => {
+      if (passed) {
+        let token = jwt.sign({ id: account.id }, SECRET);
+        return res.status(200).send({
+          user: {
+            email: account.email,
+            first_name: account.first_name,
+            last_name: account.last_name,
+          },
+          token: token,
+        });
+      } else {
+        res
+          .status(400)
+          .send({ status: 400, error: 'Incorrect user name or password' });
+      }
+    });
   }
-
-  res.send({ success: false });
 });
 // User endpoinst
 app.post('/user', (req, res) => {

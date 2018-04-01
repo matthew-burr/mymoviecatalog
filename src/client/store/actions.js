@@ -197,3 +197,43 @@ export function createUserFailure(status, error) {
     error: error,
   };
 }
+
+export const LOGIN = 'LOGGING_IN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export function postLogin(email, password) {
+  return function(dispatch) {
+    dispatch(login());
+    fetch('/log_in', {
+      method: 'POST',
+      body: JSON.stringify({ username: email, password: password }),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        dispatch(loginSuccess(data.token, data.user));
+      });
+  };
+}
+export function login() {
+  return {
+    type: LOGIN,
+  };
+}
+export function loginSuccess(token, user) {
+  console.log(user);
+  return {
+    type: LOGIN_SUCCESS,
+    user: user,
+    token: token,
+  };
+}
+export function loginFailure(status, error) {
+  return {
+    type: LOGIN_FAILURE,
+    status: status,
+    error: error,
+  };
+}

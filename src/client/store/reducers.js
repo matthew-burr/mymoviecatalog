@@ -14,6 +14,7 @@ import {
   UPDATE_MOVIE_SUCCESS,
   SELECT_MOVIE,
   CREATE_USER_SUCCESS,
+  LOGIN_SUCCESS,
 } from './actions';
 import { combineReducers } from 'redux';
 
@@ -138,6 +139,13 @@ function user(
 ) {
   switch (action.type) {
     case CREATE_USER_SUCCESS:
+      return Object.assign({}, state, {
+        email: action.user.email,
+        first_name: action.user.first_name,
+        last_name: action.user.last_name,
+        token: action.token,
+      });
+    case LOGIN_SUCCESS:
       return Object.assign({}, state, {
         email: action.user.email,
         first_name: action.user.first_name,
