@@ -79,6 +79,7 @@ export const ButtonLink = styled(Link)`
   color: white;
   text-decoration: none;
   padding: 5px;
+  box-shadow: ${STANDARD_BOX_SHADOW};
 `;
 
 export const LabeledInput = props => (

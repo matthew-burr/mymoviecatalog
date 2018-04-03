@@ -1,5 +1,5 @@
 import React from 'react';
-import { LabeledInput, Overlay, Layout } from '../components';
+import { LabeledInput, Overlay, Layout, ButtonLink } from '../components';
 import { Link } from 'react-router-dom';
 import { postLogin } from '../store/actions';
 import { connect } from 'react-redux';
@@ -60,9 +60,9 @@ class Login extends React.Component {
                 }
                 required
               />
-              <Link to="/" onClick={this.handleLogin}>
+              <ButtonLink to="/" onClick={this.handleLogin}>
                 Log In
-              </Link>
+              </ButtonLink>
             </form>
           </Layout>
         </Overlay>

@@ -1,4 +1,11 @@
-import { LabeledInput, Layout, Overlay, Label, Button } from '../components';
+import {
+  LabeledInput,
+  Layout,
+  Overlay,
+  Label,
+  Button,
+  ButtonLink,
+} from '../components';
 import React from 'react';
 import { connect } from 'react-redux';
 import { postNewUser } from '../store/actions';
@@ -111,9 +118,9 @@ class BaseCreateUser extends React.Component {
                 }
                 required
               />
-              <Link to="/" onClick={this.handleCreate}>
+              <ButtonLink to="/" onClick={this.handleCreate}>
                 Create
-              </Link>
+              </ButtonLink>
             </form>
           </Layout>
         </Overlay>
