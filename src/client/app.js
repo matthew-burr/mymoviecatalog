@@ -59,13 +59,7 @@ class App extends React.Component {
           <Route path="/" render={() => <Home data={DATA_MODEL} />} />
         </Switch>
         <Route path="/addmovie" component={AddMovie} />
-        <Route
-          path="/editmovie"
-          render={() => {
-            store.dispatch(selectMovie(this.props.location.state.movie));
-            return <EditMovie />;
-          }}
-        />
+        <Route path="/editmovie" component={EditMovie} />
       </div>
     );
   }

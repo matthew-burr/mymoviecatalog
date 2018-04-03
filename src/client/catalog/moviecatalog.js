@@ -1,5 +1,5 @@
 import React from 'react';
-import { Movie } from './movie';
+import Movie from './movie';
 import { Link, Route } from 'react-router-dom';
 import { StyledLink, Layout, STANDARD_BOX_SHADOW } from '../components';
 import { connect } from 'react-redux';
