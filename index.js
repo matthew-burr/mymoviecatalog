@@ -10,10 +10,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const SECRET = 'n0b0dy-should-ever-no-this-secr3t';
 const SALT_ROUNDS = 10;
+const SAFE_ROUTES = ['/login', '/createuser', '/log_in', '/user'];
 
 app.use(express.static('build/public'));
 app.use(bodyParser.json());
 app.use('/testing', express.static('testing'));
+app.use((req, res, next) => {
+  if (SAFE_ROUTES.includes(req.path) || checkLoggedIn(req)) return next();
+
+  res.status(401).json({ error: 'User is not logged in' });
+});
 
 // User endpoints
 app.post('/log_in', async (req, res) => {
@@ -154,8 +160,14 @@ function sendError(res, error) {
   res.status(400).json({ error: error });
 }
 
-function verifyLogin(req) {
-  let { token } = req.body;
+function checkLoggedIn(req) {
+  let authentication = req.get('Authentication');
+  if (!authentication) return false;
+
+  let token_parts = String(authentication).split(' ');
+  if (token_parts.length < 2 || token_parts[0] != 'Bearer') return false;
+
+  let token = token_parts[1];
   if (token) {
     try {
       req.mmcUserID = jwt.verify(token, SECRET).id;

@@ -97,9 +97,7 @@ export function putUpdateMovie(movie) {
     return fetch(`/movies/${movie.id}`, {
       method: 'PUT',
       body: JSON.stringify(movie),
-      headers: new Headers({
-        'content-type': 'application/json',
-      }),
+      headers: headerFunc(),
     })
       .then(response => {
         return response.json();
@@ -138,9 +136,7 @@ export function sendDeleteMovie(movie) {
     dispatch(deleteMovie(movie.id));
     fetch(`/movies/${movie.id}`, {
       method: 'DELETE',
-      headers: new Headers({
-        'content-type': 'application/json',
-      }),
+      headers: headerFunc(),
     }).then(response => {
       if (response.ok) {
         dispatch(deleteMovieSuccess(movie.id));

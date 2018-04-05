@@ -1,9 +1,10 @@
 import React from 'react';
 import GenreFilter from './genrefilter';
 
+const GENRES = [{ genre: 'Action' }, { genre: 'Comedy' }, { genre: 'Drama' }];
+
 export default class SideBar extends React.Component {
   render() {
-    let { genres } = this.props;
-    return <GenreFilter genres={genres} />;
+    return <GenreFilter genres={GENRES} />;
   }
 }

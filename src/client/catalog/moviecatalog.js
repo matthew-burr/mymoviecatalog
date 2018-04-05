@@ -3,6 +3,7 @@ import Movie from './movie';
 import { Link, Route } from 'react-router-dom';
 import { StyledLink, Layout, STANDARD_BOX_SHADOW } from '../components';
 import { connect } from 'react-redux';
+import { fetchAllMovies } from '../store/actions';
 import AddMovie from './addmovie';
 
 const AddButton = StyledLink.extend`
@@ -19,10 +20,19 @@ const AddButton = StyledLink.extend`
 `;
 
 const mapStateToProps = state => ({ movies: state.movieCatalog.movies });
+const mapDispatchToProps = dispatch => ({
+  onMounted: () => {
+    dispatch(fetchAllMovies());
+  },
+});
 
 class BaseMovieCatalog extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.onMounted();
   }
 
   render() {
@@ -40,6 +50,8 @@ class BaseMovieCatalog extends React.Component {
   }
 }
 
-const MovieCatalog = connect(mapStateToProps)(BaseMovieCatalog);
+const MovieCatalog = connect(mapStateToProps, mapDispatchToProps)(
+  BaseMovieCatalog
+);
 
 export default MovieCatalog;

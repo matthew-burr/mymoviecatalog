@@ -134,7 +134,7 @@ function currentMovie(state = { movie: {} }, action) {
 }
 
 function user(
-  state = { email: '', first_name: '', last_name: '', token: '' },
+  state = { user: { email: '', first_name: '', last_name: '' }, token: '' },
   action
 ) {
   switch (action.type) {

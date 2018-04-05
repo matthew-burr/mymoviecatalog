@@ -3,6 +3,7 @@ import UserInfo from './userinfo';
 import Search from './search';
 import styled from 'styled-components';
 import { ShadowPanel, Layout } from '../components';
+import { connect } from 'react-redux';
 
 const HeaderContainer = ShadowPanel.extend`
   display: flex;
@@ -18,6 +19,12 @@ const Title = styled.h1`
   flex-grow: 3;
 `;
 
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  };
+};
+
 const SiteTitle = ({ children }) => <Title>{children}</Title>;
 
 const ControlPanel = ({ user }) => (
@@ -27,7 +34,7 @@ const ControlPanel = ({ user }) => (
   </Layout>
 );
 
-export default class Header extends React.Component {
+class Header extends React.Component {
   render() {
     let { user } = this.props;
     return (
@@ -40,3 +47,5 @@ export default class Header extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(Header);

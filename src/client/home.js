@@ -10,11 +10,11 @@ export default class Home extends React.Component {
     return (
       <div>
         <div className="row">
-          <Header user={data.user} />
+          <Header />
         </div>
         <div className="row">
           <div className="col-sm-2">
-            <SideBar genres={data.genres} />
+            <SideBar />
           </div>
           <div className="col-sm-10">
             <MovieCatalog />
