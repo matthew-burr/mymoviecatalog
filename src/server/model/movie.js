@@ -4,6 +4,21 @@ import { Model } from './model';
 import { QUERIES } from './queries';
 
 export class Movies extends Model {
+  constructor(userID) {
+    super(userID);
+    this.getMovies = this.getMovies.bind(this);
+    this.getMovieById = this.getMovieById.bind(this);
+    this.getMovieGenres = this.getMovieGenres.bind(this);
+    this.getMovieTalent = this.getMovieTalent.bind(this);
+    this.postMovie = this.postMovie.bind(this);
+    this.putMovie = this.putMovie.bind(this);
+    this.deleteMovie = this.deleteMovie.bind(this);
+    this.addTalentToMovie = this.addTalentToMovie.bind(this);
+    this.deleteTalentFromMovie = this.deleteTalentFromMovie.bind(this);
+    this.addGenreToMovie = this.addGenreToMovie.bind(this);
+    this.deleteGenreFromMovie = this.deleteGenreFromMovie.bind(this);
+  }
+
   async getMovies() {
     return await this.execQuery(QUERIES.SELECT_ALL_MOVIES);
   }
