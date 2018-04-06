@@ -208,19 +208,17 @@ export const LOGIN = 'LOGGING_IN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export function postLogin(email, password) {
-  return function(dispatch) {
+  return async function(dispatch) {
     dispatch(login());
-    fetch('/log_in', {
+    let res = await fetch('/log_in', {
       method: 'POST',
       body: JSON.stringify({ username: email, password: password }),
       headers: new Headers({
         'Content-Type': 'application/json',
       }),
-    })
-      .then(res => res.json())
-      .then(data => {
-        dispatch(loginSuccess(data.token, data.user));
-      });
+    });
+    let data = await res.json();
+    dispatch(loginSuccess(data.token, data.user));
   };
 }
 export function login() {

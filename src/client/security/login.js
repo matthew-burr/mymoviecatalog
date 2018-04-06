@@ -1,13 +1,19 @@
 import React from 'react';
-import { LabeledInput, Overlay, Layout, ButtonLink } from '../components';
+import {
+  LabeledInput,
+  Overlay,
+  Layout,
+  ButtonLink,
+  Button,
+} from '../components';
 import { Link } from 'react-router-dom';
 import { postLogin } from '../store/actions';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogIn: (email, password) => {
-      dispatch(postLogin(email, password));
+    onLogIn: async (email, password) => {
+      await dispatch(postLogin(email, password));
     },
   };
 };
@@ -20,12 +26,13 @@ class Login extends React.Component {
     this.state = { email: '', password: '' };
   }
 
-  handleLogin(e) {
+  async handleLogin(e) {
     let { email, password } = this.state;
-    if (email && email.trim !== '' && password && password.trim() !== '')
-      return this.props.onLogIn(email, password);
-
-    e.preventDefault();
+    if (email && email.trim !== '' && password && password.trim() !== '') {
+      await this.props.onLogIn(email, password);
+      this.props.history.push('/');
+      return;
+    }
   }
 
   handleFieldChange(field) {
@@ -38,7 +45,7 @@ class Login extends React.Component {
         <Overlay width="80%" height="80%" top="10%" left="10%">
           <Layout vertical>
             <h1>Log In To Your Account</h1>
-            <form>
+            <div>
               <LabeledInput
                 id="email"
                 label="Your Email"
@@ -60,10 +67,8 @@ class Login extends React.Component {
                 }
                 required
               />
-              <ButtonLink to="/" onClick={this.handleLogin}>
-                Log In
-              </ButtonLink>
-            </form>
+              <Button to="/" onClick={this.handleLogin} value="Log In" />
+            </div>
           </Layout>
         </Overlay>
       </div>

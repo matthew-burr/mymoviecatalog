@@ -37,18 +37,20 @@ setHeaderFunction(() => {
 });
 
 // Credit to https://tylermcginnis.com/react-router-protected-routes-authentication/ for PrivateRoute
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      store.getState().user.token ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/login" />
-      )
-    }
-  />
-);
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        store.getState().user.token ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/login" />
+        )
+      }
+    />
+  );
+};
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -60,7 +62,7 @@ class App extends React.Component {
       <div>
         <Switch>
           <Route path="/createuser" component={CreateUser} />
-          <Route path="/login" component={Login} />
+          <Route path="/login" component={withRouter(Login)} />
           <PrivateRoute path="/" component={Home} />} />
         </Switch>
         <Route path="/addmovie" component={AddMovie} />
