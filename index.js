@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const SECRET = 'n0b0dy-should-ever-no-this-secr3t';
 const SALT_ROUNDS = 10;
-const SAFE_ROUTES = ['/login', '/createuser', '/log_in', '/user'];
+const SAFE_ROUTES = ['/login', '/createuser', '/log_in', '/user', '/welcome'];
 var movies = new moviesSrc.Movies(1);
 
 app.use(express.static('build/public'));

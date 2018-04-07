@@ -5,6 +5,8 @@ import CreateUser from './security/createuser';
 import Login from './security/login';
 import AddMovie from './catalog/addmovie';
 import EditMovie from './catalog/editmovie';
+import Welcome from './welcome';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -45,7 +47,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         store.getState().user.token ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/login" />
+          <Redirect to="/welcome" />
         )
       }
     />
@@ -61,6 +63,7 @@ class App extends React.Component {
     return (
       <div>
         <Switch>
+          <Route path="/welcome" component={Welcome} />
           <Route path="/createuser" component={CreateUser} />
           <Route path="/login" component={withRouter(Login)} />
           <PrivateRoute path="/" component={Home} />} />

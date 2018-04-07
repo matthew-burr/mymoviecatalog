@@ -2,7 +2,7 @@ import React from 'react';
 import UserInfo from './userinfo';
 import Search from './search';
 import styled from 'styled-components';
-import { ShadowPanel, Layout } from '../components';
+import { ShadowPanel, Layout, Title } from '../components';
 import { connect } from 'react-redux';
 
 const HeaderContainer = ShadowPanel.extend`
@@ -11,12 +11,6 @@ const HeaderContainer = ShadowPanel.extend`
   background-color: rgb(200, 0, 0);
   padding-left: 40px;
   margin-bottom: 20px;
-`;
-
-const Title = styled.h1`
-  color: white;
-  font-size: 36pt;
-  flex-grow: 3;
 `;
 
 const mapStateToProps = state => {

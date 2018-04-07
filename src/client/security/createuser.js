@@ -65,7 +65,7 @@ class BaseCreateUser extends React.Component {
       <div>
         <Overlay width="80%" height="80%" top="10%" left="10%">
           <Layout vertical>
-            <h1>Create a New User</h1>
+            <h1>Create a New Account</h1>
             <form>
               <LabeledInput
                 id="email"

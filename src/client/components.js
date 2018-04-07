@@ -9,12 +9,30 @@ const STANDARD_TEXT_SHADOW = '2px 2px 4px #000000';
 
 const STANDARD_RED = 'rgb(200, 0, 0)';
 
+export const Title = styled.h1`
+  color: white;
+  font-size: 36pt;
+  flex-grow: 3;
+`;
+
 export const Layout = styled.div`
   display: flex;
   flex-direction: ${props => (props.vertical ? 'column' : 'row')};
   overflow: ${props => (props.scrollable ? 'auto' : 'hidden')};
   flex-wrap: ${props => (props.wrapping ? 'wrap' : 'nowrap')};
   flex-grow: 1;
+  justify-content: ${props =>
+    props.centered &&
+    (props.centered === 'horizontal' || props.centered === 'both')
+      ? 'center'
+      : 'flex-start'};
+  align-items: ${props =>
+    props.centered &&
+    (props.centered === 'vertical' || props.centered === 'both')
+      ? 'center'
+      : 'stretch'};
+  width: ${props => (props.width ? props.width : 'auto')}
+  height: ${props => (props.height ? props.height : 'auto')}
 `;
 
 export const Label = styled.label`
@@ -30,7 +48,7 @@ export const Overlay = ShadowPanel.extend`
   z-order: 1000;
   position: fixed;
   top: ${props => (props.top ? props.top : '25%')};
-  left: ${props => (props.top ? props.top : '25%')};
+  left: ${props => (props.left ? props.left : '25%')};
   background-color: white;
   width: ${props => (props.width ? props.width : '50%')};
   height: ${props => (props.height ? props.height : '50%')};
