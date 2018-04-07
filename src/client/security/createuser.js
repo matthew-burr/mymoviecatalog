@@ -13,13 +13,13 @@ import { Link } from 'react-router-dom';
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCreate: user => {
-      dispatch(postNewUser(user));
+    onCreate: async user => {
+      await dispatch(postNewUser(user));
     },
   };
 };
 
-class BaseCreateUser extends React.Component {
+class CreateUser extends React.Component {
   constructor(props) {
     super(props);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -37,19 +37,21 @@ class BaseCreateUser extends React.Component {
     this.setState(field);
   }
 
-  handleCreate(e) {
+  async handleCreate(e) {
     if (
       !this.isValidPassword(this.state.password, this.state.confirmation) ||
       !this.isValidEmail(this.state.email)
     )
-      return e.preventDefault();
+      return;
 
-    this.props.onCreate({
+    await this.props.onCreate({
       email: this.state.email,
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       password: this.state.password,
     });
+
+    this.props.history.push('/');
   }
 
   isValidPassword(password, confirmation) {
@@ -118,9 +120,7 @@ class BaseCreateUser extends React.Component {
                 }
                 required
               />
-              <ButtonLink to="/" onClick={this.handleCreate}>
-                Create
-              </ButtonLink>
+              <Button to="/" onClick={this.handleCreate} value="Create" />
             </form>
           </Layout>
         </Overlay>
@@ -129,5 +129,4 @@ class BaseCreateUser extends React.Component {
   }
 }
 
-const CreateUser = connect(null, mapDispatchToProps)(BaseCreateUser);
-export default CreateUser;
+export default connect(null, mapDispatchToProps)(CreateUser);

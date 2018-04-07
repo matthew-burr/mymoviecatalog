@@ -1,12 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Home from './home';
-import CreateUser from './security/createuser';
-import Login from './security/login';
-import AddMovie from './catalog/addmovie';
-import EditMovie from './catalog/editmovie';
-import Welcome from './welcome';
-
 import {
   BrowserRouter as Router,
   Route,
@@ -16,13 +9,21 @@ import {
 import { withRouter } from 'react-router';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+
 import {
   fetchAllMovies,
   selectMovie,
   setHeaderFunction,
 } from './store/actions';
 import appReducer from './store/reducers';
-import { Provider } from 'react-redux';
+
+import Home from './home';
+import CreateUser from './security/createuser';
+import Login from './security/login';
+import AddMovie from './catalog/addmovie';
+import EditMovie from './catalog/editmovie';
+import Welcome from './welcome';
 
 const store = createStore(appReducer, applyMiddleware(thunkMiddleware));
 setHeaderFunction(() => {
@@ -64,7 +65,7 @@ class App extends React.Component {
       <div>
         <Switch>
           <Route path="/welcome" component={Welcome} />
-          <Route path="/createuser" component={CreateUser} />
+          <Route path="/createuser" component={withRouter(CreateUser)} />
           <Route path="/login" component={withRouter(Login)} />
           <PrivateRoute path="/" component={Home} />} />
         </Switch>

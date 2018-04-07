@@ -168,19 +168,17 @@ export const CREATE_USER = 'CREATE_USER';
 export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
 export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
 export function postNewUser(user) {
-  return function(dispatch) {
+  return async function(dispatch) {
     dispatch(createUser(user));
-    fetch('/user', {
+    let res = await fetch('/user', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: new Headers({
         'Content-Type': 'application/json',
       }),
-    })
-      .then(res => res.json())
-      .then(data => {
-        dispatch(createUserSuccess(data.token, data.user));
-      });
+    });
+    let data = await res.json();
+    dispatch(createUserSuccess(data.token, data.user));
   };
 }
 export function createUser(user) {
