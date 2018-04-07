@@ -45,7 +45,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-class BaseEditMovie extends React.Component {
+class EditMovie extends React.Component {
   constructor(props) {
     super(props);
     let { movie } = this.props;
@@ -147,5 +147,4 @@ class BaseEditMovie extends React.Component {
   }
 }
 
-const EditMovie = connect(mapStateToProps, mapDispatchToProps)(BaseEditMovie);
-export default EditMovie;
+export default connect(mapStateToProps, mapDispatchToProps)(EditMovie);

@@ -15,6 +15,7 @@ import { postNewMovie } from '../store/actions';
 
 const BAD_IMAGE_SERVER = 'ia.media-imdb.com';
 const GOOD_IMAGE_SERVER = 'images-na.ssl-images-amazon.com';
+const API_BASE = 'https://www.omdbapi.com/?apikey=4ba5e3af';
 
 const MiniMoviePoster = styled.img`
   width: 100%;
@@ -69,7 +70,7 @@ const SearchResult = ({ movies, onResultClick }) => {
   return null;
 };
 
-class BaseAddMovie extends React.Component {
+class AddMovie extends React.Component {
   constructor(props) {
     super(props);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -80,6 +81,7 @@ class BaseAddMovie extends React.Component {
       release_year: '',
       rating: '',
       poster: '',
+      imdbID: '',
       searchResults: [],
     };
   }
@@ -103,6 +105,7 @@ class BaseAddMovie extends React.Component {
               title: item.Title,
               release_year: item.Year,
               poster: item.Poster.replace(BAD_IMAGE_SERVER, GOOD_IMAGE_SERVER),
+              imdbID: item.imdbID,
             })),
           });
         } else console.log(result);
@@ -111,10 +114,19 @@ class BaseAddMovie extends React.Component {
   }
 
   handleResultClick(movie) {
+    const imdbID = movie.imdbID;
+
+    // get rating
+    fetch(API_BASE + `&i=${imdbID}`)
+      .then(response => response.json())
+      .then(result => {
+        this.setState({ rating: result.Rated });
+      });
     this.setState({
       title: movie.title,
       release_year: movie.release_year,
       poster: movie.poster,
+      imdbID: movie.imdbID,
     });
   }
 
@@ -175,6 +187,7 @@ class BaseAddMovie extends React.Component {
                     this.props.onAdd({
                       title: this.state.title,
                       release_year: this.state.release_year,
+                      rating: this.state.rating,
                       poster: this.state.poster || 'images/noposter.jpg',
                     });
                   }}
@@ -193,6 +206,4 @@ class BaseAddMovie extends React.Component {
   }
 }
 
-const AddMovie = connect(null, mapDispatchToProps)(BaseAddMovie);
-
-export default AddMovie;
+export default connect(null, mapDispatchToProps)(AddMovie);

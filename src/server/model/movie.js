@@ -36,6 +36,7 @@ export class Movies extends Model {
   }
 
   async postMovie(movie) {
+    console.log(movie);
     return await this.execQuery(QUERIES.INSERT_MOVIE, [
       movie.title,
       movie.release_year || null,

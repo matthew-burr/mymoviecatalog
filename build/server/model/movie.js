@@ -55,6 +55,7 @@ class Movies extends _model.Model {
   }
 
   async postMovie(movie) {
+    console.log(movie);
     return await this.execQuery(_queries.QUERIES.INSERT_MOVIE, [movie.title, movie.release_year || null, movie.rating || null, movie.poster || null]);
   }
 

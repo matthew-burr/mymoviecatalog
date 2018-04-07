@@ -37,7 +37,7 @@ export const QUERY_STRINGS = {
 
   // Movie Queries
   SELECT_ALL_MOVIES: `
-    SELECT id, title, poster 
+    SELECT *
       FROM mmc.movie
      WHERE user_id = $1`,
   SELECT_ONE_MOVIE: `
