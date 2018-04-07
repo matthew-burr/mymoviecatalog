@@ -8,6 +8,13 @@ export const setHeaderFunction = func => {
   headerFunc = func;
 };
 
+var clearPersistedStorage = () => {
+  return;
+};
+export const setClearStorageFunction = func => {
+  clearPersistedStorage = func;
+};
+
 export const GET_MOVIES = 'GET_MOVIES';
 export const GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS';
 export const GET_MOVIES_FAILURE = 'GET_MOVIES_FAILURE';
@@ -236,5 +243,18 @@ export function loginFailure(status, error) {
     type: LOGIN_FAILURE,
     status: status,
     error: error,
+  };
+}
+
+export const LOGGED_OUT = 'LOGGED_OUT';
+export function logOut() {
+  return async function(dispatch) {
+    await clearPersistedStorage();
+    dispatch(loggedOut);
+  };
+}
+export function loggedOut() {
+  return {
+    type: LOGGED_OUT,
   };
 }

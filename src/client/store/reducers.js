@@ -15,6 +15,7 @@ import {
   SELECT_MOVIE,
   CREATE_USER_SUCCESS,
   LOGIN_SUCCESS,
+  LOGGED_OUT,
 } from './actions';
 import { combineReducers } from 'redux';
 
@@ -112,6 +113,8 @@ function movieCatalog(
         isFetching: false,
         isInvalid: false,
       });
+    case LOGGED_OUT:
+      return { isFetching: false, isInvalid: false, movies: [] };
 
     default:
       return state;
@@ -128,13 +131,15 @@ function currentMovie(state = { movie: {} }, action) {
       return Object.assign({}, state, {
         movie: {},
       });
+    case LOGGED_OUT:
+      return { movie: {} };
     default:
       return state;
   }
 }
 
 function user(
-  state = { user: { email: '', first_name: '', last_name: '' }, token: '' },
+  state = { email: '', first_name: '', last_name: '', token: '' },
   action
 ) {
   switch (action.type) {
@@ -152,6 +157,13 @@ function user(
         last_name: action.user.last_name,
         token: action.token,
       });
+    case LOGGED_OUT:
+      return {
+        email: '',
+        first_name: '',
+        last_name: '',
+        token: '',
+      };
     default:
       return state;
   }

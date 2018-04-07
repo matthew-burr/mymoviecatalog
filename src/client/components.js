@@ -9,6 +9,8 @@ const STANDARD_TEXT_SHADOW = '2px 2px 4px #000000';
 
 const STANDARD_RED = 'rgb(200, 0, 0)';
 
+const STANDARD_BUTTON_MARGIN = '10px 10px 10px 0';
+
 export const Title = styled.h1`
   color: white;
   font-size: 36pt;
@@ -20,7 +22,7 @@ export const Layout = styled.div`
   flex-direction: ${props => (props.vertical ? 'column' : 'row')};
   overflow: ${props => (props.scrollable ? 'auto' : 'hidden')};
   flex-wrap: ${props => (props.wrapping ? 'wrap' : 'nowrap')};
-  flex-grow: 1;
+  flex-grow: ${props => (props.grow ? props.grow : 1)};
   justify-content: ${props =>
     props.centered &&
     (props.centered === 'horizontal' || props.centered === 'both')
@@ -91,7 +93,7 @@ export const Button = styled.input.attrs({
 export const ButtonLink = styled(Link)`
   border: 1px solid ${props => (props.borderColor ? props.borderColor : 'gray')};
   display: inline-block;
-  margin: 10px 10px 10px 0;
+  margin: ${props => (props.margin ? props.margin : STANDARD_BUTTON_MARGIN)};
   border-radius: 5px;
   background-color: ${STANDARD_RED};
   color: white;
