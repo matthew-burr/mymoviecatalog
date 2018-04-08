@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom';
 import { postLogin } from '../store/actions';
 import { connect } from 'react-redux';
 
+const PaddedLayout = Layout.extend`
+  padding: 5px;
+`;
 const mapDispatchToProps = dispatch => {
   return {
     onLogIn: async (email, password) => {
@@ -43,7 +46,7 @@ class Login extends React.Component {
     return (
       <div>
         <Overlay width="80%" height="80%" top="10%" left="10%">
-          <Layout vertical>
+          <PaddedLayout vertical>
             <h1>Log In To Your Account</h1>
             <div>
               <LabeledInput
@@ -69,7 +72,7 @@ class Login extends React.Component {
               />
               <Button to="/" onClick={this.handleLogin} value="Log In" />
             </div>
-          </Layout>
+          </PaddedLayout>
         </Overlay>
       </div>
     );

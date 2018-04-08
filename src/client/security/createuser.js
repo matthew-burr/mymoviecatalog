@@ -11,6 +11,10 @@ import { connect } from 'react-redux';
 import { postNewUser } from '../store/actions';
 import { Link } from 'react-router-dom';
 
+const PaddedLayout = Layout.extend`
+  padding: 5px;
+`;
+
 const mapDispatchToProps = dispatch => {
   return {
     onCreate: async user => {
@@ -66,7 +70,7 @@ class CreateUser extends React.Component {
     return (
       <div>
         <Overlay width="80%" height="80%" top="10%" left="10%">
-          <Layout vertical>
+          <PaddedLayout vertical>
             <h1>Create a New Account</h1>
             <form>
               <LabeledInput
@@ -122,7 +126,7 @@ class CreateUser extends React.Component {
               />
               <Button to="/" onClick={this.handleCreate} value="Create" />
             </form>
-          </Layout>
+          </PaddedLayout>
         </Overlay>
       </div>
     );

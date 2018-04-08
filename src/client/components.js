@@ -54,8 +54,8 @@ export const Overlay = ShadowPanel.extend`
   background-color: white;
   width: ${props => (props.width ? props.width : '50%')};
   height: ${props => (props.height ? props.height : '50%')};
-  padding: 50px;
   display: flex;
+  padding: 20px;
   border: 1px solid rgb(20, 20, 20);
 `;
 
