@@ -258,3 +258,11 @@ export function loggedOut() {
     type: LOGGED_OUT,
   };
 }
+
+export const SEARCH_FOR = 'SEARCH_FOR';
+export function searchFor(term) {
+  return {
+    type: SEARCH_FOR,
+    search_term: term,
+  };
+}

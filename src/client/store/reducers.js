@@ -16,6 +16,7 @@ import {
   CREATE_USER_SUCCESS,
   LOGIN_SUCCESS,
   LOGGED_OUT,
+  SEARCH_FOR,
 } from './actions';
 import { combineReducers } from 'redux';
 
@@ -34,6 +35,7 @@ const myMovieCatalog = combineReducers({
   movieCatalog,
   currentMovie,
   user,
+  search,
 });
 
 export default myMovieCatalog;
@@ -164,6 +166,15 @@ function user(
         last_name: '',
         token: '',
       };
+    default:
+      return state;
+  }
+}
+
+function search(state = { search_term: '' }, action) {
+  switch (action.type) {
+    case SEARCH_FOR:
+      return { search_term: action.search_term || '' };
     default:
       return state;
   }
