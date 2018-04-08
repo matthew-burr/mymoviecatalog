@@ -17,6 +17,7 @@ import {
   LOGIN_SUCCESS,
   LOGGED_OUT,
   SEARCH_FOR,
+  MODAL_CHANGE,
 } from './actions';
 import { combineReducers } from 'redux';
 
@@ -36,6 +37,7 @@ const myMovieCatalog = combineReducers({
   currentMovie,
   user,
   search,
+  modal,
 });
 
 export default myMovieCatalog;
@@ -175,6 +177,15 @@ function search(state = { search_term: '' }, action) {
   switch (action.type) {
     case SEARCH_FOR:
       return { search_term: action.search_term || '' };
+    default:
+      return state;
+  }
+}
+
+function modal(state = { modal_set: false }, action) {
+  switch (action.type) {
+    case MODAL_CHANGE:
+      return { modal_set: action.modal };
     default:
       return state;
   }

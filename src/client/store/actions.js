@@ -266,3 +266,17 @@ export function searchFor(term) {
     search_term: term,
   };
 }
+
+export const MODAL_CHANGE = 'MODAL_ON';
+export function modalOn() {
+  return {
+    type: MODAL_CHANGE,
+    modal: true,
+  };
+}
+export function modalOff() {
+  return {
+    type: MODAL_CHANGE,
+    modal: false,
+  };
+}

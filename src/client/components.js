@@ -54,7 +54,7 @@ export const Overlay = ShadowPanel.extend`
   background-color: white;
   width: ${props => (props.width ? props.width : '50%')};
   height: ${props => (props.height ? props.height : '50%')};
-  padding: 20px;
+  padding: 50px;
   display: flex;
   border: 1px solid rgb(20, 20, 20);
 `;
@@ -79,12 +79,13 @@ export const Button = styled.input.attrs({
   type: 'button',
 })`
   border: 1px solid ${props => (props.borderColor ? props.borderColor : 'gray')};
-  margin: 10px 10px 10px 0;
+  margin: 20px 10px 10px 0;
   border-radius: 5px;
   background-color: ${STANDARD_RED};
   color: white;
   font-size: 1em;
   padding: 5px;
+  box-shadow: ${STANDARD_BOX_SHADOW};
   &:hover {
     cursor: pointer;
   }

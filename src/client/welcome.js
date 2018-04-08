@@ -28,8 +28,13 @@ export default class Welcome extends Component {
           </P>
           <P>
             If you already have an account,{' '}
-            <ButtonLink to="/login">Log In</ButtonLink>. If not, then you should{' '}
-            <ButtonLink to="/createuser">Create an Account</ButtonLink> now.
+            <ButtonLink to="/login" margin="0">
+              Log In
+            </ButtonLink>. If not, then you should{' '}
+            <ButtonLink to="/createuser" margin="0">
+              Create an Account
+            </ButtonLink>{' '}
+            now.
           </P>
         </Layout>
       </div>

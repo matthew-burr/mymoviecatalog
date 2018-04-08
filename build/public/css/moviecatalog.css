@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Fascinate+Inline|Nunito');
+@import url('https://fonts.googleapis.com/css?family=Fascinate+Inline|Nunito|Roboto');
 
 body,
 button {
@@ -9,5 +9,5 @@ button {
 }
 
 h1 {
-  font-family: 'Fascinate Inline', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }

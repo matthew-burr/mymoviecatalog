@@ -26,10 +26,16 @@ const CircleButton = StyledLink.extend`
   margin-left: 20px;
 `;
 
+const PaddedLayout = Layout.extend`
+  padding-left: 40px;
+`;
+
 const mapStateToProps = state => ({
   movies: state.movieCatalog.movies,
   search_term: state.search.search_term,
+  modal_set: state.modal.modal_set,
 });
+
 const mapDispatchToProps = dispatch => ({
   onMounted: () => {
     dispatch(fetchAllMovies());
@@ -39,7 +45,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-class BaseMovieCatalog extends React.Component {
+class MovieCatalog extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -49,11 +55,11 @@ class BaseMovieCatalog extends React.Component {
   }
 
   render() {
-    let { movies, search_term } = this.props;
+    let { movies, search_term, modal_set } = this.props;
     const re = new RegExp(search_term, 'i');
     return (
       <div>
-        <Layout wrapping>
+        <PaddedLayout wrapping>
           {movies
             .filter(movie => movie && re.test(movie.title))
             .map((movie, index) => <Movie key={index} movie={movie} />)}
@@ -73,14 +79,10 @@ class BaseMovieCatalog extends React.Component {
               +
             </CircleButton>
           </FixedPanel>
-        </Layout>
+        </PaddedLayout>
       </div>
     );
   }
 }
 
-const MovieCatalog = connect(mapStateToProps, mapDispatchToProps)(
-  BaseMovieCatalog
-);
-
-export default MovieCatalog;
+export default connect(mapStateToProps, mapDispatchToProps)(MovieCatalog);
