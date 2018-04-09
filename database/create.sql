@@ -31,10 +31,11 @@ INSERT INTO mmc.talent (first_name, last_name) VALUES
 CREATE TABLE IF NOT EXISTS mmc.movie (
   id SERIAL NOT NULL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES mmc.user (id),
-  title TEXT NOT NULL UNIQUE,
+  title TEXT NOT NULL,
   release_year INTEGER NULL,
   rating TEXT NULL,
-  poster TEXT NULL
+  poster TEXT NULL,
+  UNIQUE (user_id, title, release_year)
 );
 
 DELETE FROM mmc.movie;
