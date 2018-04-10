@@ -104,7 +104,10 @@ class AddMovie extends React.Component {
             searchResults: result.Search.map(item => ({
               title: item.Title,
               release_year: item.Year,
-              poster: item.Poster.replace(BAD_IMAGE_SERVER, GOOD_IMAGE_SERVER),
+              poster:
+                item.Poster === 'N/A'
+                  ? 'images/noposter.jpg'
+                  : item.Poster.replace(BAD_IMAGE_SERVER, GOOD_IMAGE_SERVER),
               imdbID: item.imdbID,
             })),
           });
